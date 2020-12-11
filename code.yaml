@@ -30,10 +30,10 @@ themes:
   # - Bioscience
   # - Buildings and Construction
   # - Chemistry
-  # - Electronics
+  - Electronics
   # - Energy
   # - Environment
   # - Fire
-  # - Forensic Science
+  - Forensic Science
   # - Health
-  # - Information technology
+  - Information technology
