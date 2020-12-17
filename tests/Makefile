@@ -32,6 +32,7 @@ all: \
   $(top_srcdir)/.git_submodule_init.done.log \
   $(top_srcdir)/case_exiftool/__init__.py \
   $(top_srcdir)/case_exiftool/local_uuid.py \
+  $(top_srcdir)/setup.cfg \
   $(top_srcdir)/setup.py \
   requirements.txt
 	rm -rf venv
