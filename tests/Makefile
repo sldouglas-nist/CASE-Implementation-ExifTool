@@ -42,7 +42,8 @@ all: \
 	source venv/bin/activate ; \
 	  pip install \
 	    --upgrade \
-	    pip
+	    pip \
+	    setuptools
 	source venv/bin/activate ; \
 	  cd $(top_srcdir) ; \
 	    python3 setup.py install
