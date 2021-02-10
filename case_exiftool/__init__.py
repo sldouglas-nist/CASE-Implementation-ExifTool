@@ -269,15 +269,6 @@ WHERE {
           n_raster_picture_facet
         ))
 
-        # TODO This property has an open question on its usage.
-        # https://unifiedcyberontology.atlassian.net/browse/OC-72
-        if not n_camera is None:
-            out_graph.add((
-              n_raster_picture_facet,
-              NS_UCO_OBSERVABLE.camera,
-              n_camera
-            ))
-
         if mime_type in mime_type_to_picture_type:
             l_picture_type = rdflib.Literal(mime_type_to_picture_type[mime_type])
             out_graph.add((

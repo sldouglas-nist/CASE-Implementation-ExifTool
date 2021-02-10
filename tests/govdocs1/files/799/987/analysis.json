@@ -249,9 +249,6 @@
                 },
                 {
                     "@type": "uco-observable:RasterPicture",
-                    "uco-observable:camera": {
-                        "@id": "kb:device-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95"
-                    },
                     "uco-observable:pictureHeight": {
                         "@type": "xsd:integer",
                         "@value": "1960"
