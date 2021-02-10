@@ -39,16 +39,16 @@ all: \
 	$(PYTHON3) -m virtualenv \
 	  --python=$(PYTHON3) \
 	  venv
-	source venv/bin/activate ; \
-	  pip install \
+	source venv/bin/activate \
+	  && pip install \
 	    --upgrade \
 	    pip \
 	    setuptools
-	source venv/bin/activate ; \
-	  cd $(top_srcdir) ; \
-	    python3 setup.py install
-	source venv/bin/activate ; \
-	  pip install \
+	source venv/bin/activate \
+	  && cd $(top_srcdir) \
+	    && python3 setup.py install
+	source venv/bin/activate \
+	  && pip install \
 	    -r requirements.txt
 	touch $@
 
