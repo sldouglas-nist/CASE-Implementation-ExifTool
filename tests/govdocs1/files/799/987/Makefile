@@ -57,9 +57,9 @@ analysis.ttl: \
   $(tests_srcdir)/.venv.done.log \
   799987_printConv.xml \
   799987_raw.xml
-	source $(top_srcdir)/tests/venv/bin/activate \
-	  && DEMO_UUID_REQUESTING_NONRANDOM=NONRANDOM_REQUESTED \
-	    case_exiftool \
+	export DEMO_UUID_REQUESTING_NONRANDOM=NONRANDOM_REQUESTED \
+	  && source $(top_srcdir)/tests/venv/bin/activate \
+	    && case_exiftool \
 	      --output-format turtle \
 	      --print-conv-xml 799987_printConv.xml \
 	      --raw-xml 799987_raw.xml \

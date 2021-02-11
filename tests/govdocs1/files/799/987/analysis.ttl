@@ -21,7 +21,7 @@
 @prefix uco-vocabulary: <https://unifiedcyberontology.org/ontology/uco/vocabulary#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-kb:device-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95
+kb:device-dcad5d4a-e808-5967-bda2-19bffa8c2b52
 	a uco-observable:CyberItem ;
 	uco-core:facets [
 		a uco-observable:Device ;
@@ -30,11 +30,12 @@ kb:device-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95
 	] ;
 	.
 
-kb:location-dcad5d4a-e808-5967-bda2-19bffa8c2b52
+kb:location-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95
 	a uco-location:Location ;
+	rdfs:label "30 deg 18' 19.80\" N, 89 deg 19' 3.00\" W" ;
 	uco-core:facets [
 		a uco-location:LatLongCoordinates ;
-		uco-location:altitude "151" ;
+		uco-location:altitude "151.0"^^xsd:decimal ;
 		uco-location:latitude "30.3055"^^xsd:decimal ;
 		uco-location:longitude "-89.3175"^^xsd:decimal ;
 	] ;
@@ -43,71 +44,194 @@ kb:location-dcad5d4a-e808-5967-bda2-19bffa8c2b52
 kb:picture-7804137c-e2dd-53da-ab7c-3de0bf0197e4
 	a uco-observable:CyberItem ;
 	exiftool-et:toolkit "Image::ExifTool 12.00" ;
-	exiftool-Composite:Aperture "9" ;
-	exiftool-Composite:BlueBalance "1.2109375" ;
-	exiftool-Composite:CircleOfConfusion "0.0200308404192444" ;
-	exiftool-Composite:FOV "26.9914893603273" ;
-	exiftool-Composite:FocalLength35efl "75" ;
-	exiftool-Composite:HyperfocalDistance "13.8675049056307" ;
-	exiftool-Composite:ImageSize "3008 1960" ;
-	exiftool-Composite:LensID "78 40 37 6E 2C 3C 7C 0E" ;
-	exiftool-Composite:LensSpec "24 120 3.5 5.6 14" ;
-	exiftool-Composite:LightValue "13.661778097772" ;
-	exiftool-Composite:Megapixels "5.89568" ;
+	exiftool-Composite:Aperture
+		"9" ,
+		"9.0"
+		;
+	exiftool-Composite:BlueBalance
+		"1.2109375" ,
+		"1.210938"
+		;
+	exiftool-Composite:CircleOfConfusion
+		"0.020 mm" ,
+		"0.0200308404192444"
+		;
+	exiftool-Composite:FOV
+		"26.9914893603273" ,
+		"27.0 deg"
+		;
+	exiftool-Composite:FocalLength35efl
+		"50.0 mm (35 mm equivalent: 75.0 mm)" ,
+		"75"
+		;
+	exiftool-Composite:HyperfocalDistance
+		"13.8675049056307" ,
+		"13.87 m"
+		;
+	exiftool-Composite:ImageSize
+		"3008 1960" ,
+		"3008x1960"
+		;
+	exiftool-Composite:LensID
+		"78 40 37 6E 2C 3C 7C 0E" ,
+		"AF-S VR Zoom-Nikkor 24-120mm f/3.5-5.6G IF-ED"
+		;
+	exiftool-Composite:LensSpec
+		"24 120 3.5 5.6 14" ,
+		"24-120mm f/3.5-5.6 G VR"
+		;
+	exiftool-Composite:LightValue
+		"13.661778097772" ,
+		"13.7"
+		;
+	exiftool-Composite:Megapixels
+		"5.89568" ,
+		"5.9"
+		;
 	exiftool-Composite:RedBalance "2.171875" ;
 	exiftool-Composite:ScaleFactor35efl "1.5" ;
-	exiftool-Composite:ShutterSpeed "0.003125" ;
+	exiftool-Composite:ShutterSpeed
+		"0.003125" ,
+		"1/320"
+		;
 	exiftool-Composite:SubSecCreateDate "2005:08:31 21:40:03.02" ;
 	exiftool-Composite:SubSecDateTimeOriginal "2005:08:31 21:40:03.02" ;
 	exiftool-Composite:SubSecModifyDate "2005:08:31 21:40:03.02" ;
-	exiftool-ExifIFD:CFAPattern "2 2 2 1 1 0" ;
-	exiftool-ExifIFD:ColorSpace "1" ;
-	exiftool-ExifIFD:ComponentsConfiguration "1 2 3 0" ;
+	exiftool-ExifIFD:CFAPattern
+		"2 2 2 1 1 0" ,
+		"[Blue,Green][Green,Red]"
+		;
+	exiftool-ExifIFD:ColorSpace
+		"1" ,
+		"sRGB"
+		;
+	exiftool-ExifIFD:ComponentsConfiguration
+		"1 2 3 0" ,
+		"Y, Cb, Cr, -"
+		;
 	exiftool-ExifIFD:CompressedBitsPerPixel "2" ;
-	exiftool-ExifIFD:Contrast "2" ;
+	exiftool-ExifIFD:Contrast
+		"2" ,
+		"High"
+		;
 	exiftool-ExifIFD:CreateDate "2005:08:31 21:40:03" ;
-	exiftool-ExifIFD:CustomRendered "0" ;
+	exiftool-ExifIFD:CustomRendered
+		"0" ,
+		"Normal"
+		;
 	exiftool-ExifIFD:DateTimeOriginal "2005:08:31 21:40:03" ;
 	exiftool-ExifIFD:DigitalZoomRatio "1" ;
 	exiftool-ExifIFD:ExifVersion "0220" ;
 	exiftool-ExifIFD:ExposureCompensation "0" ;
-	exiftool-ExifIFD:ExposureMode "0" ;
-	exiftool-ExifIFD:ExposureProgram "2" ;
-	exiftool-ExifIFD:ExposureTime "0.003125" ;
-	exiftool-ExifIFD:FNumber "9" ;
-	exiftool-ExifIFD:FileSource "3" ;
-	exiftool-ExifIFD:Flash "0" ;
+	exiftool-ExifIFD:ExposureMode
+		"0" ,
+		"Auto"
+		;
+	exiftool-ExifIFD:ExposureProgram
+		"2" ,
+		"Program AE"
+		;
+	exiftool-ExifIFD:ExposureTime
+		"0.003125" ,
+		"1/320"
+		;
+	exiftool-ExifIFD:FNumber
+		"9" ,
+		"9.0"
+		;
+	exiftool-ExifIFD:FileSource
+		"3" ,
+		"Digital Camera"
+		;
+	exiftool-ExifIFD:Flash
+		"0" ,
+		"No Flash"
+		;
 	exiftool-ExifIFD:FlashpixVersion "0100" ;
-	exiftool-ExifIFD:FocalLength "50" ;
-	exiftool-ExifIFD:FocalLengthIn35mmFormat "75" ;
-	exiftool-ExifIFD:GainControl "0" ;
-	exiftool-ExifIFD:LightSource "0" ;
-	exiftool-ExifIFD:MaxApertureValue "4.75682846001088" ;
-	exiftool-ExifIFD:MeteringMode "5" ;
-	exiftool-ExifIFD:Saturation "0" ;
-	exiftool-ExifIFD:SceneCaptureType "0" ;
-	exiftool-ExifIFD:SceneType "1" ;
-	exiftool-ExifIFD:SensingMethod "2" ;
-	exiftool-ExifIFD:Sharpness "0" ;
+	exiftool-ExifIFD:FocalLength
+		"50" ,
+		"50.0 mm"
+		;
+	exiftool-ExifIFD:FocalLengthIn35mmFormat
+		"75" ,
+		"75 mm"
+		;
+	exiftool-ExifIFD:GainControl
+		"0" ,
+		"None"
+		;
+	exiftool-ExifIFD:LightSource
+		"0" ,
+		"Unknown"
+		;
+	exiftool-ExifIFD:MaxApertureValue
+		"4.75682846001088" ,
+		"4.8"
+		;
+	exiftool-ExifIFD:MeteringMode
+		"5" ,
+		"Multi-segment"
+		;
+	exiftool-ExifIFD:Saturation
+		"0" ,
+		"Normal"
+		;
+	exiftool-ExifIFD:SceneCaptureType
+		"0" ,
+		"Standard"
+		;
+	exiftool-ExifIFD:SceneType
+		"1" ,
+		"Directly photographed"
+		;
+	exiftool-ExifIFD:SensingMethod
+		"2" ,
+		"One-chip color area"
+		;
+	exiftool-ExifIFD:Sharpness
+		"0" ,
+		"Normal"
+		;
 	exiftool-ExifIFD:SubSecTime "02" ;
 	exiftool-ExifIFD:SubSecTimeDigitized "02" ;
 	exiftool-ExifIFD:SubSecTimeOriginal "02" ;
-	exiftool-ExifIFD:SubjectDistanceRange "0" ;
+	exiftool-ExifIFD:SubjectDistanceRange
+		"0" ,
+		"Unknown"
+		;
 	exiftool-ExifIFD:UserComment "" ;
-	exiftool-ExifIFD:WhiteBalance "0" ;
+	exiftool-ExifIFD:WhiteBalance
+		"0" ,
+		"Auto"
+		;
 	exiftool-GPS:GPSMapDatum "         " ;
 	exiftool-GPS:GPSSatellites "04" ;
 	exiftool-GPS:GPSTimeStamp "21:39:23.84" ;
-	exiftool-GPS:GPSVersionID "2 2 0 0" ;
+	exiftool-GPS:GPSVersionID
+		"2 2 0 0" ,
+		"2.2.0.0"
+		;
 	exiftool-IFD0:ImageDescription "                               " ;
 	exiftool-IFD0:ModifyDate "2005:08:31 21:40:03" ;
-	exiftool-IFD0:ResolutionUnit "2" ;
+	exiftool-IFD0:ResolutionUnit
+		"2" ,
+		"inches"
+		;
 	exiftool-IFD0:Software "Ver.5.01" ;
 	exiftool-IFD0:XResolution "300" ;
-	exiftool-IFD0:YCbCrPositioning "2" ;
+	exiftool-IFD0:YCbCrPositioning
+		"2" ,
+		"Co-sited"
+		;
 	exiftool-IFD0:YResolution "300" ;
-	exiftool-IFD1:Compression "6" ;
-	exiftool-IFD1:ResolutionUnit "2" ;
+	exiftool-IFD1:Compression
+		"6" ,
+		"JPEG (old-style)"
+		;
+	exiftool-IFD1:ResolutionUnit
+		"2" ,
+		"inches"
+		;
 	exiftool-IFD1:ThumbnailImage """
 /9j/2wCEAAICAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQ
 DQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRQBAgQEBQQFCQUFCRQNCw0UFBQU
@@ -221,61 +345,163 @@ A//Z
 	exiftool-IFD1:ThumbnailLength "4818" ;
 	exiftool-IFD1:ThumbnailOffset "26098" ;
 	exiftool-IFD1:XResolution "300" ;
-	exiftool-IFD1:YCbCrPositioning "2" ;
+	exiftool-IFD1:YCbCrPositioning
+		"2" ,
+		"Co-sited"
+		;
 	exiftool-IFD1:YResolution "300" ;
-	exiftool-InteropIFD:InteropIndex "R98" ;
+	exiftool-InteropIFD:InteropIndex
+		"R98" ,
+		"R98 - DCF basic file (sRGB)"
+		;
 	exiftool-InteropIFD:InteropVersion "0100" ;
 	exiftool-ExifTool:ExifToolVersion "12.00" ;
 	exiftool-File:BitsPerSample "8" ;
 	exiftool-File:ColorComponents "3" ;
-	exiftool-File:EncodingProcess "0" ;
-	exiftool-File:ExifByteOrder "MM" ;
+	exiftool-File:EncodingProcess
+		"0" ,
+		"Baseline DCT, Huffman coding"
+		;
+	exiftool-File:ExifByteOrder
+		"Big-endian (Motorola, MM)" ,
+		"MM"
+		;
 	exiftool-File:FileType "JPEG" ;
-	exiftool-File:FileTypeExtension "JPG" ;
+	exiftool-File:FileTypeExtension
+		"JPG" ,
+		"jpg"
+		;
 	exiftool-File:ImageHeight "1960" ;
 	exiftool-File:ImageWidth "3008" ;
-	exiftool-File:YCbCrSubSampling "2 1" ;
-	exiftool-System:Directory "." ;
+	exiftool-File:YCbCrSubSampling
+		"2 1" ,
+		"YCbCr4:2:2 (2 1)"
+		;
+	exiftool-System:Directory
+		"." ,
+		"./799"
+		;
 	exiftool-System:FileAccessDate "2020:12:01 21:50:06-05:00" ;
 	exiftool-System:FileInodeChangeDate "2020:12:01 21:50:06-05:00" ;
 	exiftool-System:FileModifyDate "2005:09:14 12:58:00-04:00" ;
 	exiftool-System:FileName "799987.jpg" ;
-	exiftool-System:FilePermissions "644" ;
-	exiftool-Nikon:AFAreaMode "1" ;
-	exiftool-Nikon:AFPoint "0" ;
-	exiftool-Nikon:AFPointsInFocus "0" ;
-	exiftool-Nikon:ColorHue "MODE1   " ;
-	exiftool-Nikon:ColorMode "COLOR" ;
+	exiftool-System:FilePermissions
+		"644" ,
+		"rw-r--r--"
+		;
+	exiftool-Nikon:AFAreaMode
+		"1" ,
+		"Dynamic Area"
+		;
+	exiftool-Nikon:AFPoint
+		"0" ,
+		"Center"
+		;
+	exiftool-Nikon:AFPointsInFocus
+		"(none)" ,
+		"0"
+		;
+	exiftool-Nikon:ColorHue
+		"MODE1   " ,
+		"Mode1"
+		;
+	exiftool-Nikon:ColorMode
+		"COLOR" ,
+		"Color"
+		;
 	exiftool-Nikon:ExposureDifference "0" ;
-	exiftool-Nikon:FlashMode "0" ;
-	exiftool-Nikon:FlashSetting "            " ;
-	exiftool-Nikon:FlashType "        " ;
-	exiftool-Nikon:FocusMode "AF-C  " ;
+	exiftool-Nikon:FlashMode
+		"0" ,
+		"Did Not Fire"
+		;
+	exiftool-Nikon:FlashSetting
+		"" ,
+		"            "
+		;
+	exiftool-Nikon:FlashType
+		"" ,
+		"        "
+		;
+	exiftool-Nikon:FocusMode
+		"AF-C" ,
+		"AF-C  "
+		;
 	exiftool-Nikon:HueAdjustment "3" ;
-	exiftool-Nikon:ISO "0 200" ;
-	exiftool-Nikon:Lens "24 120 3.5 5.6" ;
+	exiftool-Nikon:ISO
+		"0 200" ,
+		"200"
+		;
+	exiftool-Nikon:Lens
+		"24 120 3.5 5.6" ,
+		"24-120mm f/3.5-5.6"
+		;
 	exiftool-Nikon:LensDataVersion "0100" ;
-	exiftool-Nikon:LensFStops "5.33333333333333" ;
+	exiftool-Nikon:LensFStops
+		"5.33" ,
+		"5.33333333333333"
+		;
 	exiftool-Nikon:LensIDNumber "120" ;
-	exiftool-Nikon:LensType "14" ;
-	exiftool-Nikon:LightSource "NATURAL    " ;
+	exiftool-Nikon:LensType
+		"14" ,
+		"G VR"
+		;
+	exiftool-Nikon:LightSource
+		"NATURAL    " ,
+		"Natural"
+		;
 	exiftool-Nikon:MCUVersion "124" ;
-	exiftool-Nikon:MakerNoteVersion "0200" ;
-	exiftool-Nikon:MaxApertureAtMaxFocal "5.65685424949238" ;
-	exiftool-Nikon:MaxApertureAtMinFocal "3.56359487256136" ;
-	exiftool-Nikon:MaxFocalLength "119.864566150135" ;
-	exiftool-Nikon:MinFocalLength "24.4810708660931" ;
+	exiftool-Nikon:MakerNoteVersion
+		"0200" ,
+		"2.00"
+		;
+	exiftool-Nikon:MaxApertureAtMaxFocal
+		"5.65685424949238" ,
+		"5.7"
+		;
+	exiftool-Nikon:MaxApertureAtMinFocal
+		"3.56359487256136" ,
+		"3.6"
+		;
+	exiftool-Nikon:MaxFocalLength
+		"119.864566150135" ,
+		"119.9 mm"
+		;
+	exiftool-Nikon:MinFocalLength
+		"24.4810708660931" ,
+		"24.5 mm"
+		;
 	exiftool-Nikon:ProgramShift "0" ;
-	exiftool-Nikon:Quality "NORMAL " ;
-	exiftool-Nikon:SensorPixelSize "5.9 5.9" ;
-	exiftool-Nikon:Sharpness "NORMAL" ;
-	exiftool-Nikon:ShootingMode "0" ;
+	exiftool-Nikon:Quality
+		"NORMAL " ,
+		"Normal"
+		;
+	exiftool-Nikon:SensorPixelSize
+		"5.9 5.9" ,
+		"5.9 x 5.9 um"
+		;
+	exiftool-Nikon:Sharpness
+		"NORMAL" ,
+		"Normal"
+		;
+	exiftool-Nikon:ShootingMode
+		"0" ,
+		"Single-Frame"
+		;
 	exiftool-Nikon:ShotInfoVersion "0100" ;
-	exiftool-Nikon:ToneComp "HIGH    " ;
+	exiftool-Nikon:ToneComp
+		"HIGH    " ,
+		"High"
+		;
 	exiftool-Nikon:WB_RBLevels "2.171875 1.2109375 1 1" ;
-	exiftool-Nikon:WhiteBalance "AUTO        " ;
+	exiftool-Nikon:WhiteBalance
+		"AUTO        " ,
+		"Auto"
+		;
 	exiftool-Nikon:WhiteBalanceFineTune "0" ;
-	exiftool-PreviewIFD:Compression "6" ;
+	exiftool-PreviewIFD:Compression
+		"6" ,
+		"JPEG (old-style)"
+		;
 	exiftool-PreviewIFD:PreviewImage """
 /9j/2wCEAAUHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx4kJCIeISEmKzcv
 Jik0KSEhMEEwNDk7Pj4+JS5ESEM8SDc8PjsBBQsLDg0OHBAQHDsnISc7Ozs7
@@ -816,9 +1042,15 @@ VZEl1KV42DIcYKnjoKxm00ddKLUtUf/Z
 """^^xsd:base64Binary ;
 	exiftool-PreviewIFD:PreviewImageLength "24099" ;
 	exiftool-PreviewIFD:PreviewImageStart "1646" ;
-	exiftool-PreviewIFD:ResolutionUnit "2" ;
+	exiftool-PreviewIFD:ResolutionUnit
+		"2" ,
+		"inches"
+		;
 	exiftool-PreviewIFD:XResolution "300" ;
-	exiftool-PreviewIFD:YCbCrPositioning "2" ;
+	exiftool-PreviewIFD:YCbCrPositioning
+		"2" ,
+		"Co-sited"
+		;
 	exiftool-PreviewIFD:YResolution "300" ;
 	uco-core:facets
 		[
@@ -875,11 +1107,7 @@ VZEl1KV42DIcYKnjoKxm00ddKLUtUf/Z
 			] ;
 		] ,
 		[
-			a uco-observable:File ;
-		] ,
-		[
 			a uco-observable:RasterPicture ;
-			uco-observable:camera kb:device-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95 ;
 			uco-observable:pictureHeight "1960"^^xsd:integer ;
 			uco-observable:pictureType "jpg" ;
 			uco-observable:pictureWidth "3008"^^xsd:integer ;
@@ -890,7 +1118,7 @@ VZEl1KV42DIcYKnjoKxm00ddKLUtUf/Z
 kb:relationship-2fc5bc7c-187b-54b1-9c5f-9e99b80e8718
 	a uco-core:Relationship ;
 	uco-core:kindOfRelationship "Extracted_From"^^uco-vocabulary:CyberItemRelationshipVocab ;
-	uco-core:source kb:location-dcad5d4a-e808-5967-bda2-19bffa8c2b52 ;
+	uco-core:source kb:location-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95 ;
 	uco-core:target kb:picture-7804137c-e2dd-53da-ab7c-3de0bf0197e4 ;
 	.
 
