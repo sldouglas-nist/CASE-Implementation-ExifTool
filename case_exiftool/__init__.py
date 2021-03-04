@@ -33,18 +33,18 @@ except ImportError:
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
-NS_EXIFTOOL_COMPOSITE = "http://ns.exiftool.ca/Composite/1.0/"
-NS_EXIFTOOL_ET = "http://ns.exiftool.ca/1.0/"
-NS_EXIFTOOL_EXIFTOOL = "http://ns.exiftool.ca/ExifTool/1.0/"
-NS_EXIFTOOL_GPS = "http://ns.exiftool.ca/EXIF/GPS/1.0/"
-NS_EXIFTOOL_SYSTEM = "http://ns.exiftool.ca/File/System/1.0/"
-NS_EXIFTOOL_FILE = "http://ns.exiftool.ca/File/1.0/"
-NS_EXIFTOOL_IFD0 = "http://ns.exiftool.ca/EXIF/IFD0/1.0/"
-NS_EXIFTOOL_EXIFIFD = "http://ns.exiftool.ca/EXIF/ExifIFD/1.0/"
-NS_EXIFTOOL_NIKON = "http://ns.exiftool.ca/MakerNotes/Nikon/1.0/"
-NS_EXIFTOOL_PREVIEWIFD = "http://ns.exiftool.ca/MakerNotes/PreviewIFD/1.0/"
-NS_EXIFTOOL_INTEROPIFD = "http://ns.exiftool.ca/EXIF/InteropIFD/1.0/"
-NS_EXIFTOOL_IFD1 = "http://ns.exiftool.ca/EXIF/IFD1/1.0/"
+NS_EXIFTOOL_COMPOSITE = rdflib.Namespace("http://ns.exiftool.ca/Composite/1.0/")
+NS_EXIFTOOL_ET = rdflib.Namespace("http://ns.exiftool.ca/1.0/")
+NS_EXIFTOOL_EXIFTOOL = rdflib.Namespace("http://ns.exiftool.ca/ExifTool/1.0/")
+NS_EXIFTOOL_GPS = rdflib.Namespace("http://ns.exiftool.ca/EXIF/GPS/1.0/")
+NS_EXIFTOOL_SYSTEM = rdflib.Namespace("http://ns.exiftool.ca/File/System/1.0/")
+NS_EXIFTOOL_FILE = rdflib.Namespace("http://ns.exiftool.ca/File/1.0/")
+NS_EXIFTOOL_IFD0 = rdflib.Namespace("http://ns.exiftool.ca/EXIF/IFD0/1.0/")
+NS_EXIFTOOL_EXIFIFD = rdflib.Namespace("http://ns.exiftool.ca/EXIF/ExifIFD/1.0/")
+NS_EXIFTOOL_NIKON = rdflib.Namespace("http://ns.exiftool.ca/MakerNotes/Nikon/1.0/")
+NS_EXIFTOOL_PREVIEWIFD = rdflib.Namespace("http://ns.exiftool.ca/MakerNotes/PreviewIFD/1.0/")
+NS_EXIFTOOL_INTEROPIFD = rdflib.Namespace("http://ns.exiftool.ca/EXIF/InteropIFD/1.0/")
+NS_EXIFTOOL_IFD1 = rdflib.Namespace("http://ns.exiftool.ca/EXIF/IFD1/1.0/")
 NS_RDF = rdflib.RDF
 NS_RDFS = rdflib.RDFS
 NS_UCO_CORE = rdflib.Namespace("https://unifiedcyberontology.org/ontology/uco/core#")
