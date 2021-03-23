@@ -394,7 +394,7 @@ WHERE {
             self.graph.add((
               self._n_camera_object,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.CyberItem
+              NS_UCO_OBSERVABLE.ObservableObject
             ))
         return self._n_camera_object
 
@@ -408,11 +408,11 @@ WHERE {
             self.graph.add((
               self._n_camera_object_device_facet,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.Device
+              NS_UCO_OBSERVABLE.DeviceFacet
             ))
             self.graph.add((
               self.n_camera_object,
-              NS_UCO_CORE.facets,
+              NS_UCO_CORE.hasFacet,
               self._n_camera_object_device_facet
             ))
         return self._n_camera_object_device_facet
@@ -427,11 +427,11 @@ WHERE {
             self.graph.add((
               self._n_content_data_facet,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.ContentData
+              NS_UCO_OBSERVABLE.ContentDataFacet
             ))
             self.graph.add((
               self.n_observable_object,
-              NS_UCO_CORE.facets,
+              NS_UCO_CORE.hasFacet,
               self._n_content_data_facet
             ))
         return self._n_content_data_facet
@@ -460,11 +460,11 @@ WHERE {
             self.graph.add((
               self._n_exif_facet,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.EXIF
+              NS_UCO_OBSERVABLE.EXIFFacet
             ))
             self.graph.add((
               self.n_observable_object,
-              NS_UCO_CORE.facets,
+              NS_UCO_CORE.hasFacet,
               self._n_exif_facet
             ))
         return self._n_exif_facet
@@ -483,7 +483,7 @@ WHERE {
             ))
             self.graph.add((
               self.n_observable_object,
-              NS_UCO_CORE.facets,
+              NS_UCO_CORE.hasFacet,
               self._n_file_facet
             ))
         return self._n_file_facet
@@ -516,7 +516,7 @@ WHERE {
             ))
             self.graph.add((
               self.n_location_object,
-              NS_UCO_CORE.facets,
+              NS_UCO_CORE.hasFacet,
               self._n_location_object_latlong_facet
             ))
         return self._n_location_object_latlong_facet
@@ -532,7 +532,7 @@ WHERE {
             self.graph.add((
               self._n_observable_object,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.CyberItem
+              NS_UCO_OBSERVABLE.ObservableObject
             ))
         return self._n_observable_object
 
@@ -546,11 +546,11 @@ WHERE {
             self.graph.add((
               self._n_raster_picture_facet,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.RasterPicture
+              NS_UCO_OBSERVABLE.RasterPictureFacet
             ))
             self.graph.add((
               self.n_observable_object,
-              NS_UCO_CORE.facets,
+              NS_UCO_CORE.hasFacet,
               self._n_raster_picture_facet
             ))
         return self._n_raster_picture_facet
