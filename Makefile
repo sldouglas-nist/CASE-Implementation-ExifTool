@@ -48,6 +48,9 @@ clean:
 	@$(MAKE) \
 	  --directory tests \
 	  clean
+	@#A full clean here erases test files and causes unnecessary rebuilding for the purposes of testing ExifTool mapping.
+	@rm -f \
+	  dependencies/CASE-Examples-QC/.lib.done.log
 
 dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt: \
   .git_submodule_init.done.log

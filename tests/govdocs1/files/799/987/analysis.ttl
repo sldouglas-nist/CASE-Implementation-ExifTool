@@ -22,9 +22,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 kb:device-dcad5d4a-e808-5967-bda2-19bffa8c2b52
-	a uco-observable:CyberItem ;
-	uco-core:facets [
-		a uco-observable:Device ;
+	a uco-observable:ObservableObject ;
+	uco-core:hasFacet [
+		a uco-observable:DeviceFacet ;
 		uco-observable:manufacturer "NIKON CORPORATION" ;
 		uco-observable:model "NIKON D1X" ;
 	] ;
@@ -33,7 +33,7 @@ kb:device-dcad5d4a-e808-5967-bda2-19bffa8c2b52
 kb:location-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95
 	a uco-location:Location ;
 	rdfs:label "30 deg 18' 19.80\" N, 89 deg 19' 3.00\" W" ;
-	uco-core:facets [
+	uco-core:hasFacet [
 		a uco-location:LatLongCoordinates ;
 		uco-location:altitude "151.0"^^xsd:decimal ;
 		uco-location:latitude "30.3055"^^xsd:decimal ;
@@ -42,7 +42,7 @@ kb:location-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95
 	.
 
 kb:picture-7804137c-e2dd-53da-ab7c-3de0bf0197e4
-	a uco-observable:CyberItem ;
+	a uco-observable:ObservableObject ;
 	exiftool-et:toolkit "Image::ExifTool 12.00" ;
 	exiftool-Composite:Aperture
 		"9" ,
@@ -1052,14 +1052,14 @@ VZEl1KV42DIcYKnjoKxm00ddKLUtUf/Z
 		"Co-sited"
 		;
 	exiftool-PreviewIFD:YResolution "300" ;
-	uco-core:facets
+	uco-core:hasFacet
 		[
-			a uco-observable:ContentData ;
+			a uco-observable:ContentDataFacet ;
 			uco-observable:mimeType "image/jpeg" ;
 			uco-observable:sizeInBytes "1526008"^^xsd:long ;
 		] ,
 		[
-			a uco-observable:EXIF ;
+			a uco-observable:EXIFFacet ;
 			uco-observable:exifData [
 				a uco-types:ControlledDictionary ;
 				uco-types:entry
@@ -1107,7 +1107,7 @@ VZEl1KV42DIcYKnjoKxm00ddKLUtUf/Z
 			] ;
 		] ,
 		[
-			a uco-observable:RasterPicture ;
+			a uco-observable:RasterPictureFacet ;
 			uco-observable:pictureHeight "1960"^^xsd:integer ;
 			uco-observable:pictureType "jpg" ;
 			uco-observable:pictureWidth "3008"^^xsd:integer ;
