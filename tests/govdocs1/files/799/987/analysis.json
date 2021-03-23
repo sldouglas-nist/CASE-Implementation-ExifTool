@@ -24,9 +24,9 @@
     "@graph": [
         {
             "@id": "kb:device-dcad5d4a-e808-5967-bda2-19bffa8c2b52",
-            "@type": "uco-observable:CyberItem",
-            "uco-core:facets": {
-                "@type": "uco-observable:Device",
+            "@type": "uco-observable:ObservableObject",
+            "uco-core:hasFacet": {
+                "@type": "uco-observable:DeviceFacet",
                 "uco-observable:manufacturer": "NIKON CORPORATION",
                 "uco-observable:model": "NIKON D1X"
             }
@@ -35,7 +35,7 @@
             "@id": "kb:location-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95",
             "@type": "uco-location:Location",
             "rdfs:label": "30 deg 18' 19.80\" N, 89 deg 19' 3.00\" W",
-            "uco-core:facets": {
+            "uco-core:hasFacet": {
                 "@type": "uco-location:LatLongCoordinates",
                 "uco-location:altitude": {
                     "@type": "xsd:decimal",
@@ -53,7 +53,7 @@
         },
         {
             "@id": "kb:picture-7804137c-e2dd-53da-ab7c-3de0bf0197e4",
-            "@type": "uco-observable:CyberItem",
+            "@type": "uco-observable:ObservableObject",
             "exiftool-et:toolkit": "Image::ExifTool 12.00",
             "exiftool-Composite:Aperture": [
                 "9",
@@ -423,9 +423,9 @@
                 "Co-sited"
             ],
             "exiftool-PreviewIFD:YResolution": "300",
-            "uco-core:facets": [
+            "uco-core:hasFacet": [
                 {
-                    "@type": "uco-observable:ContentData",
+                    "@type": "uco-observable:ContentDataFacet",
                     "uco-observable:mimeType": "image/jpeg",
                     "uco-observable:sizeInBytes": {
                         "@type": "xsd:long",
@@ -433,7 +433,7 @@
                     }
                 },
                 {
-                    "@type": "uco-observable:EXIF",
+                    "@type": "uco-observable:EXIFFacet",
                     "uco-observable:exifData": {
                         "@type": "uco-types:ControlledDictionary",
                         "uco-types:entry": [
@@ -481,7 +481,7 @@
                     }
                 },
                 {
-                    "@type": "uco-observable:RasterPicture",
+                    "@type": "uco-observable:RasterPictureFacet",
                     "uco-observable:pictureHeight": {
                         "@type": "xsd:integer",
                         "@value": "1960"
