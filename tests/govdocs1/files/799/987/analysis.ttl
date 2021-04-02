@@ -1117,7 +1117,7 @@ VZEl1KV42DIcYKnjoKxm00ddKLUtUf/Z
 
 kb:relationship-2fc5bc7c-187b-54b1-9c5f-9e99b80e8718
 	a uco-core:Relationship ;
-	uco-core:kindOfRelationship "Extracted_From"^^uco-vocabulary:CyberItemRelationshipVocab ;
+	uco-core:kindOfRelationship "Extracted_From"^^uco-vocabulary:ObservableObjectRelationshipVocab ;
 	uco-core:source kb:location-e49850a6-8b3e-5b9b-bc6a-0d003dd23c95 ;
 	uco-core:target kb:picture-7804137c-e2dd-53da-ab7c-3de0bf0197e4 ;
 	.

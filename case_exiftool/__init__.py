@@ -580,7 +580,7 @@ WHERE {
             self.graph.add((
               self._n_relationship_object_location,
               NS_UCO_CORE.kindOfRelationship,
-              rdflib.Literal("Extracted_From", datatype=NS_UCO_VOCABULARY.CyberItemRelationshipVocab)
+              rdflib.Literal("Extracted_From", datatype=NS_UCO_VOCABULARY.ObservableObjectRelationshipVocab)
             ))
         return self._n_relationship_object_location
 
