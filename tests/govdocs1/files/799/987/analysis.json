@@ -498,7 +498,7 @@
             "@id": "kb:relationship-2fc5bc7c-187b-54b1-9c5f-9e99b80e8718",
             "@type": "uco-core:Relationship",
             "uco-core:kindOfRelationship": {
-                "@type": "uco-vocabulary:CyberItemRelationshipVocab",
+                "@type": "uco-vocabulary:ObservableObjectRelationshipVocab",
                 "@value": "Extracted_From"
             },
             "uco-core:source": {
