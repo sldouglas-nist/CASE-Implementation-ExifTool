@@ -31,7 +31,7 @@ all: \
 .venv.done.log: \
   $(top_srcdir)/.git_submodule_init.done.log \
   $(top_srcdir)/case_exiftool/__init__.py \
-  $(top_srcdir)/case_exiftool/local_uuid.py \
+  $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt \
   $(top_srcdir)/setup.cfg \
   $(top_srcdir)/setup.py \
   requirements.txt
@@ -44,6 +44,13 @@ all: \
 	    --upgrade \
 	    pip \
 	    setuptools
+	source venv/bin/activate \
+	  && cd $(top_srcdir)/dependencies/CASE-Utilities-Python \
+	    && pip install \
+	      .
+	source venv/bin/activate \
+	  && pip install \
+	    --requirement $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt
 	source venv/bin/activate \
 	  && cd $(top_srcdir) \
 	    && python3 setup.py install
