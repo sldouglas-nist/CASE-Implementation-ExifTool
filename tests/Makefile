@@ -33,8 +33,7 @@ all: \
   $(top_srcdir)/case_exiftool/__init__.py \
   $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt \
   $(top_srcdir)/setup.cfg \
-  $(top_srcdir)/setup.py \
-  requirements.txt
+  $(top_srcdir)/setup.py
 	rm -rf venv
 	$(PYTHON3) -m virtualenv \
 	  --python=$(PYTHON3) \
@@ -54,9 +53,6 @@ all: \
 	source venv/bin/activate \
 	  && cd $(top_srcdir) \
 	    && python3 setup.py install
-	source venv/bin/activate \
-	  && pip install \
-	    -r requirements.txt
 	touch $@
 
 check: \
