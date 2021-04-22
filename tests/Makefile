@@ -30,7 +30,6 @@ all: \
 
 .venv.done.log: \
   $(top_srcdir)/.git_submodule_init.done.log \
-  $(top_srcdir)/case_exiftool/__init__.py \
   $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt \
   $(top_srcdir)/setup.cfg \
   $(top_srcdir)/setup.py
@@ -52,7 +51,9 @@ all: \
 	    --requirement $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt
 	source venv/bin/activate \
 	  && cd $(top_srcdir) \
-	    && python3 setup.py install
+	    && pip install \
+	      --editable \
+	      .
 	touch $@
 
 check: \
