@@ -24,6 +24,8 @@ import os
 
 import rdflib.plugins.sparql
 
+import case_utils
+
 try:
     from case_exiftool import local_uuid
 except ImportError:
@@ -57,18 +59,10 @@ NS_XSD = rdflib.namespace.XSD
 argument_parser = argparse.ArgumentParser(epilog=__doc__)
 argument_parser.add_argument("--base-prefix", default="http://example.org/kb/")
 argument_parser.add_argument("--debug", action="store_true")
-argument_parser.add_argument("--output-format", help="RDF syntax to use for out_graph.  Passed to rdflib.Graph.serialize(format=).  The format will be guessed based on the output file extension, but will default to Turtle.")
+argument_parser.add_argument("--output-format", help="Override extension-based format guesser.")
 argument_parser.add_argument("--print-conv-xml", help="A file recording the output of ExifTool run against some file.  Expects exiftool was run as for --raw-xml, but also with the flag --printConv (note the double-dash).")
 argument_parser.add_argument("--raw-xml", help="A file recording the output of ExifTool run against some file.  Expects exiftool was run with -binary, -duplicates, and -xmlFormat.", required=True)
-argument_parser.add_argument("out_graph", help="A self-contained RDF graph file, in the format requested by --output-format.")
-
-def guess_graph_format(filename):
-    ext = os.path.splitext(filename)[-1].replace(".", "")
-    if ext in ("json", "json-ld", "jsonld"):
-        return "json-ld"
-    elif ext in ("ttl", "turtle"):
-        return "turtle"
-    return "turtle"
+argument_parser.add_argument("out_graph", help="A self-contained RDF graph file, in the format either requested by --output-format or guessed based on extension.")
 
 def controlled_dictionary_object_to_node(graph, controlled_dict):
     n_controlled_dictionary = rdflib.BNode()
@@ -636,7 +630,7 @@ def main():
     exiftool_rdf_mapper.map_raw_and_printconv_rdf(args.raw_xml, args.print_conv_xml)
 
     #_logger.debug("args.output_format = %r." % args.output_format)
-    output_format = args.output_format or guess_graph_format(args.out_graph)
+    output_format = args.output_format or case_utils.guess_format(args.out_graph)
 
     out_graph.serialize(destination=args.out_graph, format=output_format)
 
