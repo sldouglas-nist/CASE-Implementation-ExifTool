@@ -26,13 +26,6 @@ import rdflib.plugins.sparql
 
 import case_utils
 
-try:
-    from case_exiftool import local_uuid
-except ImportError:
-    if __name__ != "__main__":
-        raise
-    import local_uuid
-
 _logger = logging.getLogger(os.path.basename(__file__))
 
 NS_EXIFTOOL_COMPOSITE = rdflib.Namespace("http://ns.exiftool.ca/Composite/1.0/")
@@ -384,7 +377,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_camera_object is None:
-            self._n_camera_object = rdflib.URIRef(self.ns_base["device-" + local_uuid.local_uuid()])
+            self._n_camera_object = rdflib.URIRef(self.ns_base["device-" + case_utils.local_uuid.local_uuid()])
             self.graph.add((
               self._n_camera_object,
               NS_RDF.type,
@@ -488,7 +481,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_location_object is None:
-            self._n_location_object = rdflib.URIRef(self.ns_base["location-" + local_uuid.local_uuid()])
+            self._n_location_object = rdflib.URIRef(self.ns_base["location-" + case_utils.local_uuid.local_uuid()])
             self.graph.add((
               self._n_location_object,
               NS_RDF.type,
@@ -521,7 +514,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_observable_object is None:
-            self._n_observable_object = rdflib.URIRef(self.ns_base[self.oo_slug + local_uuid.local_uuid()])
+            self._n_observable_object = rdflib.URIRef(self.ns_base[self.oo_slug + case_utils.local_uuid.local_uuid()])
             # TODO Prepare list of more interesting types on adoption of the UCO release providing the ObservableObject subclass hierarchy.
             self.graph.add((
               self._n_observable_object,
@@ -555,7 +548,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_relationship_object_location is None:
-            self._n_relationship_object_location = rdflib.URIRef(self.ns_base["relationship-" + local_uuid.local_uuid()])
+            self._n_relationship_object_location = rdflib.URIRef(self.ns_base["relationship-" + case_utils.local_uuid.local_uuid()])
             self.graph.add((
               self._n_relationship_object_location,
               NS_RDF.type,
@@ -599,7 +592,7 @@ WHERE {
         return self._oo_slug
 
 def main():
-    local_uuid.configure()
+    case_utils.local_uuid.configure()
 
     args = argument_parser.parse_args()
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
