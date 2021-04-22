@@ -57,6 +57,7 @@ analysis.json: \
 
 analysis.ttl: \
   $(tests_srcdir)/.venv.done.log \
+  $(top_srcdir)/case_exiftool/__init__.py \
   799987_printConv.xml \
   799987_raw.xml
 	export DEMO_UUID_REQUESTING_NONRANDOM=NONRANDOM_REQUESTED \
