@@ -15,7 +15,7 @@
 This tool parses the RDF output of ExifTool, mapping it into UCO properties and relationships-of-assumption.  An analyst should later annotate the output with their beliefs on its verity.
 """
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 import argparse
 import contextlib
@@ -24,12 +24,7 @@ import os
 
 import rdflib.plugins.sparql
 
-try:
-    from case_exiftool import local_uuid
-except ImportError:
-    if __name__ != "__main__":
-        raise
-    import local_uuid
+import case_utils
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
@@ -57,18 +52,10 @@ NS_XSD = rdflib.namespace.XSD
 argument_parser = argparse.ArgumentParser(epilog=__doc__)
 argument_parser.add_argument("--base-prefix", default="http://example.org/kb/")
 argument_parser.add_argument("--debug", action="store_true")
-argument_parser.add_argument("--output-format", help="RDF syntax to use for out_graph.  Passed to rdflib.Graph.serialize(format=).  The format will be guessed based on the output file extension, but will default to Turtle.")
+argument_parser.add_argument("--output-format", help="Override extension-based format guesser.")
 argument_parser.add_argument("--print-conv-xml", help="A file recording the output of ExifTool run against some file.  Expects exiftool was run as for --raw-xml, but also with the flag --printConv (note the double-dash).")
 argument_parser.add_argument("--raw-xml", help="A file recording the output of ExifTool run against some file.  Expects exiftool was run with -binary, -duplicates, and -xmlFormat.", required=True)
-argument_parser.add_argument("out_graph", help="A self-contained RDF graph file, in the format requested by --output-format.")
-
-def guess_graph_format(filename):
-    ext = os.path.splitext(filename)[-1].replace(".", "")
-    if ext in ("json", "json-ld", "jsonld"):
-        return "json-ld"
-    elif ext in ("ttl", "turtle"):
-        return "turtle"
-    return "turtle"
+argument_parser.add_argument("out_graph", help="A self-contained RDF graph file, in the format either requested by --output-format or guessed based on extension.")
 
 def controlled_dictionary_object_to_node(graph, controlled_dict):
     n_controlled_dictionary = rdflib.BNode()
@@ -126,7 +113,6 @@ class ExifToolRDFMapper(object):
     def __init__(self, graph, ns_base):
         assert isinstance(graph, rdflib.Graph)
 
-        # TODO Build n_file_facet and n_content_data_facet from new case_file function, or inherit from graph that is just that file.
         self._exif_dictionary_dict = None
         self._graph = graph
         self._kv_dict_raw = None
@@ -143,6 +129,7 @@ class ExifToolRDFMapper(object):
         self._n_observable_object = None
         self._n_raster_picture_facet = None
         self._n_relationship_object_location = None
+        self._n_unix_file_permissions_facet = None
         self._oo_slug = None
         self.ns_base = ns_base
 
@@ -158,32 +145,7 @@ class ExifToolRDFMapper(object):
         assert isinstance(exiftool_iri, str)
         #_logger.debug("map_raw_and_printconv_iri(%r)." % exiftool_iri)
 
-        if exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Make":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.graph.add((
-              self.n_camera_object_device_facet,
-              NS_UCO_OBSERVABLE.manufacturer,
-              v_printconv
-            ))
-        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Model":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.graph.add((
-              self.n_camera_object_device_facet,
-              NS_UCO_OBSERVABLE.model,
-              v_raw
-            ))
-        elif exiftool_iri == "http://ns.exiftool.ca/File/1.0/MIMEType":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.mime_type = v_raw.toPython()
-            # Special case - graph logic is delayed for this IRI, because of needing to initialize the base ObservableObject based on the value.
-        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileSize":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.graph.add((
-              self.n_content_data_facet,
-              NS_UCO_OBSERVABLE.sizeInBytes,
-              rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.long)
-            ))
-        elif exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSAltitude":
+        if exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSAltitude":
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
             l_altitude = rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.decimal)
             self.graph.add((
@@ -214,17 +176,6 @@ class ExifToolRDFMapper(object):
               NS_RDFS.label,
               v_printconv
             ))
-        elif exiftool_iri in {
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitudeRef",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitude",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitudeRef",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitude",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitudeRef",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitude"
-        }:
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            dict_key = exiftool_iri.replace("http://ns.exiftool.ca/EXIF/GPS/1.0/GPS", "")
-            self.exif_dictionary_dict[dict_key] = v_raw
         elif exiftool_iri == "http://ns.exiftool.ca/EXIF/ExifIFD/1.0/ExifImageHeight":
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
             self.exif_dictionary_dict["Image Height"] = v_raw
@@ -243,6 +194,89 @@ class ExifToolRDFMapper(object):
                   NS_UCO_OBSERVABLE.pictureWidth,
                   rdflib.Literal(int(v_raw.toPython()))
                 ))
+        elif exiftool_iri in {
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitudeRef",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitude",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitudeRef",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitude",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitudeRef",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitude"
+        }:
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            dict_key = exiftool_iri.replace("http://ns.exiftool.ca/EXIF/GPS/1.0/GPS", "")
+            self.exif_dictionary_dict[dict_key] = v_raw
+        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Make":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_camera_object_device_facet,
+              NS_UCO_OBSERVABLE.manufacturer,
+              v_printconv
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Model":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_camera_object_device_facet,
+              NS_UCO_OBSERVABLE.model,
+              v_raw
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/1.0/MIMEType":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.mime_type = v_raw.toPython()
+            # Special case - graph logic is delayed for this IRI, because of needing to initialize the base ObservableObject based on the value.
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileAccessDate":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.accessedTime,
+              rdflib.Literal(v_raw.toPython().replace(" ", "T"), datatype=NS_XSD.dateTime)
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileInodeChangeDate":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.metadataChangeTime,
+              rdflib.Literal(v_raw.toPython().replace(" ", "T"), datatype=NS_XSD.dateTime)
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileModifyDate":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.modifiedTime,
+              rdflib.Literal(v_raw.toPython().replace(" ", "T"), datatype=NS_XSD.dateTime)
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileName":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.fileName,
+              v_raw
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FilePermissions":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            raw = v_raw.toPython()
+            if raw.isdigit() and int(raw) < 1000:
+                # TODO - The permissions facets seem to need revision.
+                # No POSIX permission property exists.  extPermissions can be added to an ExtInodeFacet, but that facet is scoped to EXT file systems.
+                # It might be more appropriate to call a class POSIXFilePermissionsFacet rather than UNIXFilePermissionsFacet.
+                # Until this modeling is revised, the FilePermissions property will be consumed into comments.
+                # This issue is being tracked in this ticket: https://unifiedcyberontology.atlassian.net/browse/OC-117
+                self.graph.add((
+                  self.n_unix_file_permissions_facet,
+                  NS_RDFS.comment,
+                  v_raw
+                ))
+                self.graph.add((
+                  self.n_unix_file_permissions_facet,
+                  NS_RDFS.comment,
+                  v_printconv
+                ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileSize":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_content_data_facet,
+              NS_UCO_OBSERVABLE.sizeInBytes,
+              rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.long)
+            ))
         else:
             # Somewhat in the name of information preservation, somewhat as a progress marker on converting data: Attach all remaining unconverted properties directly to the ObservableObject.  Provide both values to assist with mapping decisions.
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
@@ -390,7 +424,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_camera_object is None:
-            self._n_camera_object = rdflib.URIRef(self.ns_base["device-" + local_uuid.local_uuid()])
+            self._n_camera_object = rdflib.URIRef(self.ns_base["device-" + case_utils.local_uuid.local_uuid()])
             self.graph.add((
               self._n_camera_object,
               NS_RDF.type,
@@ -479,7 +513,7 @@ WHERE {
             self.graph.add((
               self._n_file_facet,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.File
+              NS_UCO_OBSERVABLE.FileFacet
             ))
             self.graph.add((
               self.n_observable_object,
@@ -494,7 +528,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_location_object is None:
-            self._n_location_object = rdflib.URIRef(self.ns_base["location-" + local_uuid.local_uuid()])
+            self._n_location_object = rdflib.URIRef(self.ns_base["location-" + case_utils.local_uuid.local_uuid()])
             self.graph.add((
               self._n_location_object,
               NS_RDF.type,
@@ -527,7 +561,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_observable_object is None:
-            self._n_observable_object = rdflib.URIRef(self.ns_base[self.oo_slug + local_uuid.local_uuid()])
+            self._n_observable_object = rdflib.URIRef(self.ns_base[self.oo_slug + case_utils.local_uuid.local_uuid()])
             # TODO Prepare list of more interesting types on adoption of the UCO release providing the ObservableObject subclass hierarchy.
             self.graph.add((
               self._n_observable_object,
@@ -561,7 +595,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_relationship_object_location is None:
-            self._n_relationship_object_location = rdflib.URIRef(self.ns_base["relationship-" + local_uuid.local_uuid()])
+            self._n_relationship_object_location = rdflib.URIRef(self.ns_base["relationship-" + case_utils.local_uuid.local_uuid()])
             self.graph.add((
               self._n_relationship_object_location,
               NS_RDF.type,
@@ -580,9 +614,28 @@ WHERE {
             self.graph.add((
               self._n_relationship_object_location,
               NS_UCO_CORE.kindOfRelationship,
-              rdflib.Literal("Extracted_From", datatype=NS_UCO_VOCABULARY.CyberItemRelationshipVocab)
+              rdflib.Literal("Extracted_From", datatype=NS_UCO_VOCABULARY.ObservableObjectRelationshipVocab)
             ))
         return self._n_relationship_object_location
+
+    @property
+    def n_unix_file_permissions_facet(self):
+        """
+        Initialized on first access.
+        """
+        if self._n_unix_file_permissions_facet is None:
+            self._n_unix_file_permissions_facet = rdflib.BNode()
+            self.graph.add((
+              self._n_unix_file_permissions_facet,
+              NS_RDF.type,
+              NS_UCO_OBSERVABLE.UNIXFilePermissionsFacet
+            ))
+            self.graph.add((
+              self.n_observable_object,
+              NS_UCO_CORE.hasFacet,
+              self._n_unix_file_permissions_facet
+            ))
+        return self._n_unix_file_permissions_facet
 
     @property
     def ns_base(self):
@@ -605,7 +658,7 @@ WHERE {
         return self._oo_slug
 
 def main():
-    local_uuid.configure()
+    case_utils.local_uuid.configure()
 
     args = argument_parser.parse_args()
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
@@ -636,7 +689,7 @@ def main():
     exiftool_rdf_mapper.map_raw_and_printconv_rdf(args.raw_xml, args.print_conv_xml)
 
     #_logger.debug("args.output_format = %r." % args.output_format)
-    output_format = args.output_format or guess_graph_format(args.out_graph)
+    output_format = args.output_format or case_utils.guess_format(args.out_graph)
 
     out_graph.serialize(destination=args.out_graph, format=output_format)
 

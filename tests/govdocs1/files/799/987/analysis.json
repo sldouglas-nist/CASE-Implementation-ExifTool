@@ -286,14 +286,6 @@
                 ".",
                 "./799"
             ],
-            "exiftool-System:FileAccessDate": "2020:12:01 21:50:06-05:00",
-            "exiftool-System:FileInodeChangeDate": "2020:12:01 21:50:06-05:00",
-            "exiftool-System:FileModifyDate": "2005:09:14 12:58:00-04:00",
-            "exiftool-System:FileName": "799987.jpg",
-            "exiftool-System:FilePermissions": [
-                "644",
-                "rw-r--r--"
-            ],
             "exiftool-Nikon:AFAreaMode": [
                 "1",
                 "Dynamic Area"
@@ -481,6 +473,22 @@
                     }
                 },
                 {
+                    "@type": "uco-observable:FileFacet",
+                    "uco-observable:accessedTime": {
+                        "@type": "xsd:dateTime",
+                        "@value": "2020-01-01T21:50:06-05:00"
+                    },
+                    "uco-observable:fileName": "799987.jpg",
+                    "uco-observable:metadataChangeTime": {
+                        "@type": "xsd:dateTime",
+                        "@value": "2020-01-01T21:50:06-05:00"
+                    },
+                    "uco-observable:modifiedTime": {
+                        "@type": "xsd:dateTime",
+                        "@value": "2005-01-01T12:58:00-04:00"
+                    }
+                },
+                {
                     "@type": "uco-observable:RasterPictureFacet",
                     "uco-observable:pictureHeight": {
                         "@type": "xsd:integer",
@@ -491,6 +499,13 @@
                         "@type": "xsd:integer",
                         "@value": "3008"
                     }
+                },
+                {
+                    "@type": "uco-observable:UNIXFilePermissionsFacet",
+                    "rdfs:comment": [
+                        "644",
+                        "rw-r--r--"
+                    ]
                 }
             ]
         },
@@ -498,7 +513,7 @@
             "@id": "kb:relationship-2fc5bc7c-187b-54b1-9c5f-9e99b80e8718",
             "@type": "uco-core:Relationship",
             "uco-core:kindOfRelationship": {
-                "@type": "uco-vocabulary:CyberItemRelationshipVocab",
+                "@type": "uco-vocabulary:ObservableObjectRelationshipVocab",
                 "@value": "Extracted_From"
             },
             "uco-core:source": {
