@@ -145,32 +145,7 @@ class ExifToolRDFMapper(object):
         assert isinstance(exiftool_iri, str)
         #_logger.debug("map_raw_and_printconv_iri(%r)." % exiftool_iri)
 
-        if exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Make":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.graph.add((
-              self.n_camera_object_device_facet,
-              NS_UCO_OBSERVABLE.manufacturer,
-              v_printconv
-            ))
-        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Model":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.graph.add((
-              self.n_camera_object_device_facet,
-              NS_UCO_OBSERVABLE.model,
-              v_raw
-            ))
-        elif exiftool_iri == "http://ns.exiftool.ca/File/1.0/MIMEType":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.mime_type = v_raw.toPython()
-            # Special case - graph logic is delayed for this IRI, because of needing to initialize the base ObservableObject based on the value.
-        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileSize":
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            self.graph.add((
-              self.n_content_data_facet,
-              NS_UCO_OBSERVABLE.sizeInBytes,
-              rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.long)
-            ))
-        elif exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSAltitude":
+        if exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSAltitude":
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
             l_altitude = rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.decimal)
             self.graph.add((
@@ -201,17 +176,6 @@ class ExifToolRDFMapper(object):
               NS_RDFS.label,
               v_printconv
             ))
-        elif exiftool_iri in {
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitudeRef",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitude",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitudeRef",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitude",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitudeRef",
-          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitude"
-        }:
-            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
-            dict_key = exiftool_iri.replace("http://ns.exiftool.ca/EXIF/GPS/1.0/GPS", "")
-            self.exif_dictionary_dict[dict_key] = v_raw
         elif exiftool_iri == "http://ns.exiftool.ca/EXIF/ExifIFD/1.0/ExifImageHeight":
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
             self.exif_dictionary_dict["Image Height"] = v_raw
@@ -230,6 +194,42 @@ class ExifToolRDFMapper(object):
                   NS_UCO_OBSERVABLE.pictureWidth,
                   rdflib.Literal(int(v_raw.toPython()))
                 ))
+        elif exiftool_iri in {
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitudeRef",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitude",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitudeRef",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitude",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitudeRef",
+          "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitude"
+        }:
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            dict_key = exiftool_iri.replace("http://ns.exiftool.ca/EXIF/GPS/1.0/GPS", "")
+            self.exif_dictionary_dict[dict_key] = v_raw
+        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Make":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_camera_object_device_facet,
+              NS_UCO_OBSERVABLE.manufacturer,
+              v_printconv
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Model":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_camera_object_device_facet,
+              NS_UCO_OBSERVABLE.model,
+              v_raw
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/1.0/MIMEType":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.mime_type = v_raw.toPython()
+            # Special case - graph logic is delayed for this IRI, because of needing to initialize the base ObservableObject based on the value.
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileSize":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_content_data_facet,
+              NS_UCO_OBSERVABLE.sizeInBytes,
+              rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.long)
+            ))
         else:
             # Somewhat in the name of information preservation, somewhat as a progress marker on converting data: Attach all remaining unconverted properties directly to the ObservableObject.  Provide both values to assist with mapping decisions.
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
