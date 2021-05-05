@@ -466,7 +466,7 @@ WHERE {
             self.graph.add((
               self._n_file_facet,
               NS_RDF.type,
-              NS_UCO_OBSERVABLE.File
+              NS_UCO_OBSERVABLE.FileFacet
             ))
             self.graph.add((
               self.n_observable_object,
