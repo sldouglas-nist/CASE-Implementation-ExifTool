@@ -381,14 +381,6 @@ A//Z
 		"." ,
 		"./799"
 		;
-	exiftool-System:FileAccessDate "2020:12:01 21:50:06-05:00" ;
-	exiftool-System:FileInodeChangeDate "2020:12:01 21:50:06-05:00" ;
-	exiftool-System:FileModifyDate "2005:09:14 12:58:00-04:00" ;
-	exiftool-System:FileName "799987.jpg" ;
-	exiftool-System:FilePermissions
-		"644" ,
-		"rw-r--r--"
-		;
 	exiftool-Nikon:AFAreaMode
 		"1" ,
 		"Dynamic Area"
@@ -1107,10 +1099,24 @@ VZEl1KV42DIcYKnjoKxm00ddKLUtUf/Z
 			] ;
 		] ,
 		[
+			a uco-observable:FileFacet ;
+			uco-observable:accessedTime "2020-01-01T21:50:06-05:00"^^xsd:dateTime ;
+			uco-observable:fileName "799987.jpg" ;
+			uco-observable:metadataChangeTime "2020-01-01T21:50:06-05:00"^^xsd:dateTime ;
+			uco-observable:modifiedTime "2005-01-01T12:58:00-04:00"^^xsd:dateTime ;
+		] ,
+		[
 			a uco-observable:RasterPictureFacet ;
 			uco-observable:pictureHeight "1960"^^xsd:integer ;
 			uco-observable:pictureType "jpg" ;
 			uco-observable:pictureWidth "3008"^^xsd:integer ;
+		] ,
+		[
+			a uco-observable:UNIXFilePermissionsFacet ;
+			rdfs:comment
+				"644" ,
+				"rw-r--r--"
+				;
 		]
 		;
 	.
