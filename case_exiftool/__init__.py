@@ -113,7 +113,6 @@ class ExifToolRDFMapper(object):
     def __init__(self, graph, ns_base):
         assert isinstance(graph, rdflib.Graph)
 
-        # TODO Build n_file_facet and n_content_data_facet from new case_file function, or inherit from graph that is just that file.
         self._exif_dictionary_dict = None
         self._graph = graph
         self._kv_dict_raw = None
@@ -130,6 +129,7 @@ class ExifToolRDFMapper(object):
         self._n_observable_object = None
         self._n_raster_picture_facet = None
         self._n_relationship_object_location = None
+        self._n_unix_file_permissions_facet = None
         self._oo_slug = None
         self.ns_base = ns_base
 
@@ -223,6 +223,53 @@ class ExifToolRDFMapper(object):
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
             self.mime_type = v_raw.toPython()
             # Special case - graph logic is delayed for this IRI, because of needing to initialize the base ObservableObject based on the value.
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileAccessDate":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.accessedTime,
+              rdflib.Literal(v_raw.toPython().replace(" ", "T"), datatype=NS_XSD.dateTime)
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileInodeChangeDate":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.metadataChangeTime,
+              rdflib.Literal(v_raw.toPython().replace(" ", "T"), datatype=NS_XSD.dateTime)
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileModifyDate":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.modifiedTime,
+              rdflib.Literal(v_raw.toPython().replace(" ", "T"), datatype=NS_XSD.dateTime)
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileName":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            self.graph.add((
+              self.n_file_facet,
+              NS_UCO_OBSERVABLE.fileName,
+              v_raw
+            ))
+        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FilePermissions":
+            (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            raw = v_raw.toPython()
+            if raw.isdigit() and int(raw) < 1000:
+                # TODO - The permissions facets seem to need revision.
+                # No POSIX permission property exists.  extPermissions can be added to an ExtInodeFacet, but that facet is scoped to EXT file systems.
+                # It might be more appropriate to call a class POSIXFilePermissionsFacet rather than UNIXFilePermissionsFacet.
+                # Until this modeling is revised, the FilePermissions property will be consumed into comments.
+                # This issue is being tracked in this ticket: https://unifiedcyberontology.atlassian.net/browse/OC-117
+                self.graph.add((
+                  self.n_unix_file_permissions_facet,
+                  NS_RDFS.comment,
+                  v_raw
+                ))
+                self.graph.add((
+                  self.n_unix_file_permissions_facet,
+                  NS_RDFS.comment,
+                  v_printconv
+                ))
         elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileSize":
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
             self.graph.add((
@@ -570,6 +617,25 @@ WHERE {
               rdflib.Literal("Extracted_From", datatype=NS_UCO_VOCABULARY.ObservableObjectRelationshipVocab)
             ))
         return self._n_relationship_object_location
+
+    @property
+    def n_unix_file_permissions_facet(self):
+        """
+        Initialized on first access.
+        """
+        if self._n_unix_file_permissions_facet is None:
+            self._n_unix_file_permissions_facet = rdflib.BNode()
+            self.graph.add((
+              self._n_unix_file_permissions_facet,
+              NS_RDF.type,
+              NS_UCO_OBSERVABLE.UNIXFilePermissionsFacet
+            ))
+            self.graph.add((
+              self.n_observable_object,
+              NS_UCO_CORE.hasFacet,
+              self._n_unix_file_permissions_facet
+            ))
+        return self._n_unix_file_permissions_facet
 
     @property
     def ns_base(self):
