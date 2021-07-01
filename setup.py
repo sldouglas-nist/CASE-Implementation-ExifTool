@@ -13,9 +13,5 @@
 
 import setuptools
 
-#TODO - PyPI will need a differently-written README.
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-
 if __name__ == "__main__":
     setuptools.setup()
