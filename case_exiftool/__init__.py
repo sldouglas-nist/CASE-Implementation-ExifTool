@@ -25,6 +25,7 @@ import os
 import rdflib.plugins.sparql
 
 import case_utils
+from case_utils.namespace import NS_RDF, NS_RDFS, NS_UCO_CORE, NS_UCO_IDENTITY, NS_UCO_LOCATION, NS_UCO_OBSERVABLE, NS_UCO_TYPES, NS_XSD
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
@@ -40,14 +41,6 @@ NS_EXIFTOOL_NIKON = rdflib.Namespace("http://ns.exiftool.ca/MakerNotes/Nikon/1.0
 NS_EXIFTOOL_PREVIEWIFD = rdflib.Namespace("http://ns.exiftool.ca/MakerNotes/PreviewIFD/1.0/")
 NS_EXIFTOOL_INTEROPIFD = rdflib.Namespace("http://ns.exiftool.ca/EXIF/InteropIFD/1.0/")
 NS_EXIFTOOL_IFD1 = rdflib.Namespace("http://ns.exiftool.ca/EXIF/IFD1/1.0/")
-NS_RDF = rdflib.RDF
-NS_RDFS = rdflib.RDFS
-NS_UCO_CORE = rdflib.Namespace("https://unifiedcyberontology.org/ontology/uco/core#")
-NS_UCO_LOCATION = rdflib.Namespace("https://unifiedcyberontology.org/ontology/uco/location#")
-NS_UCO_OBSERVABLE = rdflib.Namespace("https://unifiedcyberontology.org/ontology/uco/observable#")
-NS_UCO_TYPES = rdflib.Namespace("https://unifiedcyberontology.org/ontology/uco/types#")
-NS_UCO_VOCABULARY = rdflib.Namespace("https://unifiedcyberontology.org/ontology/uco/vocabulary#")
-NS_XSD = rdflib.namespace.XSD
 
 argument_parser = argparse.ArgumentParser(epilog=__doc__)
 argument_parser.add_argument("--base-prefix", default="http://example.org/kb/")
@@ -57,8 +50,8 @@ argument_parser.add_argument("--print-conv-xml", help="A file recording the outp
 argument_parser.add_argument("--raw-xml", help="A file recording the output of ExifTool run against some file.  Expects exiftool was run with -binary, -duplicates, and -xmlFormat.", required=True)
 argument_parser.add_argument("out_graph", help="A self-contained RDF graph file, in the format either requested by --output-format or guessed based on extension.")
 
-def controlled_dictionary_object_to_node(graph, controlled_dict):
-    n_controlled_dictionary = rdflib.BNode()
+def controlled_dictionary_object_to_node(graph, ns_base, controlled_dict):
+    n_controlled_dictionary = ns_base["controlled-dictionary-" + case_utils.local_uuid.local_uuid()]
     graph.add((
       n_controlled_dictionary,
       NS_RDF.type,
@@ -71,7 +64,7 @@ def controlled_dictionary_object_to_node(graph, controlled_dict):
         except:
             _logger.info("v_value = %r." % v_value)
             raise
-        n_entry = rdflib.BNode()
+        n_entry = ns_base["controlled-dictionary-entry-" + case_utils.local_uuid.local_uuid()]
         graph.add((
           n_controlled_dictionary,
           NS_UCO_TYPES.entry,
@@ -93,6 +86,15 @@ def controlled_dictionary_object_to_node(graph, controlled_dict):
           v_value
         ))
     return n_controlled_dictionary
+
+def manufacturer_name_to_node(graph: rdflib.Graph, ns_base: rdflib.Namespace, name: str) -> rdflib.URIRef:
+    """
+    This method is provided to be overwritten in case a mapping function exists within the user's knowledge base.
+    """
+    n_manufacturer = ns_base["identity-" + case_utils.local_uuid.local_uuid()]
+    graph.add((n_manufacturer, NS_RDF.type, NS_UCO_IDENTITY.Identity))
+    graph.add((n_manufacturer, NS_UCO_CORE.name, rdflib.Literal(name)))
+    return n_manufacturer
 
 class ExifToolRDFMapper(object):
     """
@@ -207,10 +209,11 @@ class ExifToolRDFMapper(object):
             self.exif_dictionary_dict[dict_key] = v_raw
         elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Make":
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
+            n_manufacturer = manufacturer_name_to_node(self.graph, self.ns_base, v_printconv)
             self.graph.add((
               self.n_camera_object_device_facet,
               NS_UCO_OBSERVABLE.manufacturer,
-              v_printconv
+              n_manufacturer
             ))
         elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Model":
             (v_raw, v_printconv) = self.pop_iri(exiftool_iri)
@@ -275,7 +278,7 @@ class ExifToolRDFMapper(object):
             self.graph.add((
               self.n_content_data_facet,
               NS_UCO_OBSERVABLE.sizeInBytes,
-              rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.long)
+              rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.integer)
             ))
         else:
             # Somewhat in the name of information preservation, somewhat as a progress marker on converting data: Attach all remaining unconverted properties directly to the ObservableObject.  Provide both values to assist with mapping decisions.
@@ -438,7 +441,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_camera_object_device_facet is None:
-            self._n_camera_object_device_facet = rdflib.BNode()
+            self._n_camera_object_device_facet = self.ns_base["device-facet-" + case_utils.local_uuid.local_uuid()]
             self.graph.add((
               self._n_camera_object_device_facet,
               NS_RDF.type,
@@ -457,7 +460,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_content_data_facet is None:
-            self._n_content_data_facet = rdflib.BNode()
+            self._n_content_data_facet = self.ns_base["content-data-facet-" + case_utils.local_uuid.local_uuid()]
             self.graph.add((
               self._n_content_data_facet,
               NS_RDF.type,
@@ -476,7 +479,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_exif_dictionary_object is None:
-            self._n_exif_dictionary_object = controlled_dictionary_object_to_node(self.graph, self.exif_dictionary_dict)
+            self._n_exif_dictionary_object = controlled_dictionary_object_to_node(self.graph, self.ns_base, self.exif_dictionary_dict)
             self.graph.add((
               self.n_exif_facet,
               NS_UCO_OBSERVABLE.exifData,
@@ -490,7 +493,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_exif_facet is None:
-            self._n_exif_facet = rdflib.BNode()
+            self._n_exif_facet = self.ns_base["exif-facet-" + case_utils.local_uuid.local_uuid()]
             self.graph.add((
               self._n_exif_facet,
               NS_RDF.type,
@@ -509,7 +512,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_file_facet is None:
-            self._n_file_facet = rdflib.BNode()
+            self._n_file_facet = self.ns_base["file-facet-" + case_utils.local_uuid.local_uuid()]
             self.graph.add((
               self._n_file_facet,
               NS_RDF.type,
@@ -542,11 +545,11 @@ WHERE {
         Initialized on first access.
         """
         if self._n_location_object_latlong_facet is None:
-            self._n_location_object_latlong_facet = rdflib.BNode()
+            self._n_location_object_latlong_facet = self.ns_base["lat-long-coordinates-facet-" + case_utils.local_uuid.local_uuid()]
             self.graph.add((
               self._n_location_object_latlong_facet,
               NS_RDF.type,
-              NS_UCO_LOCATION.LatLongCoordinates
+              NS_UCO_LOCATION.LatLongCoordinatesFacet
             ))
             self.graph.add((
               self.n_location_object,
@@ -576,7 +579,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_raster_picture_facet is None:
-            self._n_raster_picture_facet = rdflib.BNode()
+            self._n_raster_picture_facet = self.ns_base["raster-picture-facet-" + case_utils.local_uuid.local_uuid()]
             self.graph.add((
               self._n_raster_picture_facet,
               NS_RDF.type,
@@ -613,8 +616,13 @@ WHERE {
             ))
             self.graph.add((
               self._n_relationship_object_location,
+              NS_UCO_CORE.isDirectional,
+              rdflib.Literal(True)
+            ))
+            self.graph.add((
+              self._n_relationship_object_location,
               NS_UCO_CORE.kindOfRelationship,
-              rdflib.Literal("Extracted_From", datatype=NS_UCO_VOCABULARY.ObservableObjectRelationshipVocab)
+              rdflib.Literal("Extracted_From")
             ))
         return self._n_relationship_object_location
 
@@ -624,7 +632,7 @@ WHERE {
         Initialized on first access.
         """
         if self._n_unix_file_permissions_facet is None:
-            self._n_unix_file_permissions_facet = rdflib.BNode()
+            self._n_unix_file_permissions_facet = self.ns_base["unix-file-permissions-facet-" + case_utils.local_uuid.local_uuid()]
             self.graph.add((
               self._n_unix_file_permissions_facet,
               NS_RDF.type,
@@ -680,10 +688,10 @@ def main():
     out_graph.namespace_manager.bind("exiftool-IFD1", NS_EXIFTOOL_IFD1)
     out_graph.namespace_manager.bind("kb", NS_BASE)
     out_graph.namespace_manager.bind("uco-core", NS_UCO_CORE)
+    out_graph.namespace_manager.bind("uco-identity", NS_UCO_IDENTITY)
     out_graph.namespace_manager.bind("uco-location", NS_UCO_LOCATION)
     out_graph.namespace_manager.bind("uco-observable", NS_UCO_OBSERVABLE)
     out_graph.namespace_manager.bind("uco-types", NS_UCO_TYPES)
-    out_graph.namespace_manager.bind("uco-vocabulary", NS_UCO_VOCABULARY)
 
     exiftool_rdf_mapper = ExifToolRDFMapper(out_graph, NS_BASE)
     exiftool_rdf_mapper.map_raw_and_printconv_rdf(args.raw_xml, args.print_conv_xml)

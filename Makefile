@@ -30,8 +30,10 @@ all:
 	cd dependencies \
 	  && git diff . \
 	    | cat
-	git submodule init
-	git submodule update
+	git submodule update --init
+	$(MAKE) \
+	  --directory dependencies/CASE-Examples-QC \
+	  .git_submodule_init.done.log
 	touch $@
 
 check: \
@@ -57,8 +59,6 @@ dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt: \
 	$(MAKE) \
 	  PYTHON3=$(PYTHON3) \
 	  --directory dependencies/CASE-Examples-QC \
-	  .git_submodule_init.done.log \
-	  .lib.done.log \
 	  .venv.done.log
 	$(MAKE) \
 	  PYTHON3=$(PYTHON3) \

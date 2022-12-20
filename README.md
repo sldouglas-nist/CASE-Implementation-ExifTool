@@ -50,12 +50,10 @@ This project follows [SEMVER 2.0.0](https://semver.org/) where versions are decl
 
 ## Ontology versions supported
 
-This repository supports the CASE and UCO ontology versions that are linked as submodules in the [CASE Examples QC](https://github.com/ajnelson-nist/CASE-Examples-QC) repository.  Currently, those are:
+This repository supports the CASE and UCO ontology versions that are distributed with the [CASE-Utilities-Python repository](https://github.com/casework/CASE-Utilities-Python), at the newest version below a ceiling-pin in [setup.cfg](setup.cfg).  Currently, those ontology versions are:
 
-* CASE 0.3.0
-* UCO 0.5.0
-
-Classes and properties are tested for vocabulary conformance.
+* CASE 1.1.0
+* UCO 1.1.0
 
 
 ## Repository locations

@@ -17,11 +17,9 @@ top_srcdir := $(shell cd ../../../../.. ; pwd)
 
 qc_srcdir := $(top_srcdir)/dependencies/CASE-Examples-QC
 
-case_srcdir := $(top_srcdir)/dependencies/CASE-Examples-QC/dependencies/CASE-Examples/dependencies/CASE
-
 tests_srcdir := $(top_srcdir)/tests
 
-RDF_TOOLKIT_JAR := $(case_srcdir)/lib/rdf-toolkit.jar
+RDF_TOOLKIT_JAR := $(qc_srcdir)/dependencies/CASE-Examples/dependencies/UCO-develop/lib/rdf-toolkit.jar
 
 COMM ?= $(shell which gcomm 2>/dev/null || which comm)
 ifeq ($(COMM),)
@@ -34,7 +32,7 @@ $(error sort not found)
 endif
 
 all: \
-  undefined_vocabulary.txt
+  analysis.json
 
 analysis.json: \
   analysis.ttl \
@@ -51,6 +49,9 @@ analysis.json: \
 	  && python3 $(tests_srcdir)/src/compact.py \
 	    __$@ \
 	    _$@
+	source $(top_srcdir)/tests/venv/bin/activate \
+	  && case_validate \
+	    _$@
 	rm __$@
 	mv _$@ $@
 
@@ -60,13 +61,16 @@ analysis.ttl: \
   $(top_srcdir)/case_exiftool/__init__.py \
   799987_printConv.xml \
   799987_raw.xml
-	export DEMO_UUID_REQUESTING_NONRANDOM=NONRANDOM_REQUESTED \
+	export CASE_DEMO_NONRANDOM_UUID_BASE=$(top_srcdir) \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_exiftool \
 	      --output-format turtle \
 	      --print-conv-xml 799987_printConv.xml \
 	      --raw-xml 799987_raw.xml \
 	      __$@
+	source $(top_srcdir)/tests/venv/bin/activate \
+	  && case_validate \
+	    __$@
 	java -jar $(RDF_TOOLKIT_JAR) \
 	  --infer-base-iri \
 	  --inline-blank-nodes \
@@ -106,36 +110,11 @@ analysis.ttl: \
 	mv _$@ $@
 
 check: \
-  undefined_vocabulary.txt
-	test ! -s undefined_vocabulary.txt \
-	  || (echo "ERROR:tests/govdocs1/files/799/987/Makefile:The output in analysis.json has undefined CASE or UCO terms.  The first few are:" >&2 && head undefined_vocabulary.txt >&2 && exit 1)
+  analysis.json
 	source $(top_srcdir)/tests/venv/bin/activate \
 	  && pytest
 
 clean:
 	@rm -f \
 	  analysis.json \
-	  analysis.ttl \
-	  undefined_vocabulary.txt
-
-undefined_vocabulary.txt: \
-  analysis.json \
-  $(qc_srcdir)/src/vocabulary_used.py \
-  $(qc_srcdir)/tests/ontology_vocabulary.txt
-	source $(qc_srcdir)/venv/bin/activate \
-	  && python3 $(qc_srcdir)/src/vocabulary_used.py \
-	    $< \
-	    > $@___
-	grep ':' $@___ \
-	  | egrep -v '(ns.exiftool.ca|w3.org)' \
-	    | grep -v '/kb/' \
-	      > $@__
-	rm $@___
-	LC_ALL=C \
-	  $(COMM) \
-	    -13 \
-	    $(qc_srcdir)/tests/ontology_vocabulary.txt \
-	    <(LC_ALL=C $(SORT) $@__) \
-	    > $@_
-	rm $@__
-	mv $@_ $@
+	  analysis.ttl
