@@ -19,8 +19,8 @@ graph.parse("analysis.json", format="json-ld")
 nsdict = {k: v for (k, v) in graph.namespace_manager.namespaces()}
 
 
-def test_confirm_location_generated():
-    query = rdflib.plugins.sparql.prepareQuery(
+def test_confirm_location_generated() -> None:
+    query = rdflib.plugins.sparql.processor.prepareQuery(
         """\
 SELECT ?nLocation
 WHERE {

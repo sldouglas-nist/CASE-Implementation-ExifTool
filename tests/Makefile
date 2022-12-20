@@ -60,6 +60,7 @@ check-mypy: \
   .venv.done.log
 	source venv/bin/activate \
 	  && mypy \
+	    --strict \
 	    $(top_srcdir)/case_exiftool \
 	    .
 
