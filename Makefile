@@ -32,12 +32,12 @@ all:
 	    | cat
 	git submodule update --init
 	$(MAKE) \
-	  --directory dependencies/CASE-Examples-QC \
+	  --directory dependencies/CASE-Utilities-Python \
 	  .git_submodule_init.done.log
 	touch $@
 
 check: \
-  dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt
+  .git_submodule_init.done.log
 	$(MAKE) \
 	  --directory tests \
 	  check
@@ -52,32 +52,18 @@ clean:
 	  clean
 	@#A full clean here erases test files and causes unnecessary rebuilding for the purposes of testing ExifTool mapping.
 	@rm -f \
-	  dependencies/CASE-Examples-QC/.lib.done.log
-
-dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt: \
-  .git_submodule_init.done.log
-	$(MAKE) \
-	  PYTHON3=$(PYTHON3) \
-	  --directory dependencies/CASE-Examples-QC \
-	  .venv.done.log
-	$(MAKE) \
-	  PYTHON3=$(PYTHON3) \
-	  --directory dependencies/CASE-Examples-QC/tests \
-	  ontology_vocabulary.txt
-	test -r $@
+	  dependencies/CASE-Utilities-Python/.lib.done.log
 
 distclean: \
   clean
 	@rm -f \
-	  .git_submodule_init.done.log \
-	  dependencies/CASE-Examples-QC/.lib.done.log \
-	  dependencies/CASE-Examples-QC/lib/rdf-toolkit.jar
+	  .git_submodule_init.done.log
 	@$(MAKE) \
 	  --directory tests \
 	  distclean
 
 download: \
-  dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt
+  .git_submodule_init.done.log
 	$(MAKE) \
 	  --directory tests \
 	  download

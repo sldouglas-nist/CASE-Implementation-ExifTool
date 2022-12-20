@@ -15,21 +15,9 @@ SHELL := /bin/bash
 
 top_srcdir := $(shell cd ../../../../.. ; pwd)
 
-qc_srcdir := $(top_srcdir)/dependencies/CASE-Examples-QC
-
 tests_srcdir := $(top_srcdir)/tests
 
-RDF_TOOLKIT_JAR := $(qc_srcdir)/dependencies/CASE-Examples/dependencies/UCO-develop/lib/rdf-toolkit.jar
-
-COMM ?= $(shell which gcomm 2>/dev/null || which comm)
-ifeq ($(COMM),)
-$(error comm not found)
-endif
-
-SORT ?= $(shell which gsort 2>/dev/null || which sort)
-ifeq ($(SORT),)
-$(error sort not found)
-endif
+RDF_TOOLKIT_JAR := $(top_srcdir)/dependencies/CASE-Utilities-Python/dependencies/CASE/dependencies/UCO/lib/rdf-toolkit.jar
 
 all: \
   analysis.json
