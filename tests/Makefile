@@ -15,10 +15,7 @@ SHELL := /bin/bash
 
 top_srcdir := $(shell cd .. ; pwd)
 
-PYTHON3 ?= $(shell which python3.8 2>/dev/null || which python3.7 2>/dev/null || which python3.6 2>/dev/null || which python3)
-ifeq ($(PYTHON3),)
-$(error python3 not found)
-endif
+PYTHON3 ?= python3
 
 all: \
   .venv.done.log
