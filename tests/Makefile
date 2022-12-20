@@ -23,6 +23,7 @@ all: \
 	  --directory govdocs1
 
 .PHONY: \
+  check-mypy \
   download
 
 .venv.done.log: \
@@ -50,10 +51,17 @@ all: \
 	touch $@
 
 check: \
-  .venv.done.log
+  check-mypy
 	$(MAKE) \
 	  --directory govdocs1 \
 	  check
+
+check-mypy: \
+  .venv.done.log
+	source venv/bin/activate \
+	  && mypy \
+	    $(top_srcdir)/case_exiftool \
+	    .
 
 clean:
 	@rm -f \

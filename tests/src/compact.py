@@ -24,7 +24,7 @@ import json
 import logging
 import os
 
-import pyld
+import pyld  # type: ignore
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
