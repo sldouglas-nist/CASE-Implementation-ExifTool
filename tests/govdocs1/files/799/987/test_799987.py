@@ -16,15 +16,19 @@ import rdflib.plugins.sparql
 graph = rdflib.Graph()
 graph.parse("analysis.json", format="json-ld")
 
-nsdict = {k:v for (k,v) in graph.namespace_manager.namespaces()}
+nsdict = {k: v for (k, v) in graph.namespace_manager.namespaces()}
+
 
 def test_confirm_location_generated():
-    query = rdflib.plugins.sparql.prepareQuery("""\
+    query = rdflib.plugins.sparql.prepareQuery(
+        """\
 SELECT ?nLocation
 WHERE {
   ?nLocation
     a uco-location:Location
-}""", initNs=nsdict)
+}""",
+        initNs=nsdict,
+    )
     iris = set()
     for result in graph.query(query):
         iris.add(result[0].toPython())
