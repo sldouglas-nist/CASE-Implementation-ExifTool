@@ -1,17 +1,17 @@
 {
     "@context": {
-        "exiftool-Composite": "http://ns.exiftool.ca/Composite/1.0/",
-        "exiftool-ExifIFD": "http://ns.exiftool.ca/EXIF/ExifIFD/1.0/",
-        "exiftool-ExifTool": "http://ns.exiftool.ca/ExifTool/1.0/",
-        "exiftool-File": "http://ns.exiftool.ca/File/1.0/",
-        "exiftool-GPS": "http://ns.exiftool.ca/EXIF/GPS/1.0/",
-        "exiftool-IFD0": "http://ns.exiftool.ca/EXIF/IFD0/1.0/",
-        "exiftool-IFD1": "http://ns.exiftool.ca/EXIF/IFD1/1.0/",
-        "exiftool-InteropIFD": "http://ns.exiftool.ca/EXIF/InteropIFD/1.0/",
-        "exiftool-Nikon": "http://ns.exiftool.ca/MakerNotes/Nikon/1.0/",
-        "exiftool-PreviewIFD": "http://ns.exiftool.ca/MakerNotes/PreviewIFD/1.0/",
-        "exiftool-System": "http://ns.exiftool.ca/File/System/1.0/",
-        "exiftool-et": "http://ns.exiftool.ca/1.0/",
+        "exiftool-Composite": "http://ns.exiftool.org/Composite/1.0/",
+        "exiftool-ExifIFD": "http://ns.exiftool.org/EXIF/ExifIFD/1.0/",
+        "exiftool-ExifTool": "http://ns.exiftool.org/ExifTool/1.0/",
+        "exiftool-File": "http://ns.exiftool.org/File/1.0/",
+        "exiftool-GPS": "http://ns.exiftool.org/EXIF/GPS/1.0/",
+        "exiftool-IFD0": "http://ns.exiftool.org/EXIF/IFD0/1.0/",
+        "exiftool-IFD1": "http://ns.exiftool.org/EXIF/IFD1/1.0/",
+        "exiftool-InteropIFD": "http://ns.exiftool.org/EXIF/InteropIFD/1.0/",
+        "exiftool-Nikon": "http://ns.exiftool.org/MakerNotes/Nikon/1.0/",
+        "exiftool-PreviewIFD": "http://ns.exiftool.org/MakerNotes/PreviewIFD/1.0/",
+        "exiftool-System": "http://ns.exiftool.org/File/System/1.0/",
+        "exiftool-et": "http://ns.exiftool.org/1.0/",
         "kb": "http://example.org/kb/",
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
@@ -181,7 +181,7 @@
         {
             "@id": "kb:picture-41679402-5530-56a5-befe-fda477b006e5",
             "@type": "uco-observable:ObservableObject",
-            "exiftool-et:toolkit": "Image::ExifTool 12.00",
+            "exiftool-et:toolkit": "Image::ExifTool 12.52",
             "exiftool-Composite:Aperture": [
                 "9",
                 "9.0"
@@ -387,7 +387,7 @@
                 "R98 - DCF basic file (sRGB)"
             ],
             "exiftool-InteropIFD:InteropVersion": "0100",
-            "exiftool-ExifTool:ExifToolVersion": "12.00",
+            "exiftool-ExifTool:ExifToolVersion": "12.52",
             "exiftool-File:BitsPerSample": "8",
             "exiftool-File:ColorComponents": "3",
             "exiftool-File:EncodingProcess": [
@@ -409,10 +409,7 @@
                 "2 1",
                 "YCbCr4:2:2 (2 1)"
             ],
-            "exiftool-System:Directory": [
-                ".",
-                "./799"
-            ],
+            "exiftool-System:Directory": "./799",
             "exiftool-Nikon:AFAreaMode": [
                 "1",
                 "Dynamic Area"
@@ -591,10 +588,7 @@
         {
             "@id": "kb:unix-file-permissions-facet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22",
             "@type": "uco-observable:UNIXFilePermissionsFacet",
-            "rdfs:comment": [
-                "644",
-                "rw-r--r--"
-            ]
+            "rdfs:comment": "-rw-r--r--"
         }
     ]
 }

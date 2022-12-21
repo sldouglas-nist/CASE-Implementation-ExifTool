@@ -39,20 +39,20 @@ from case_utils.namespace import (
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
-NS_EXIFTOOL_COMPOSITE = rdflib.Namespace("http://ns.exiftool.ca/Composite/1.0/")
-NS_EXIFTOOL_ET = rdflib.Namespace("http://ns.exiftool.ca/1.0/")
-NS_EXIFTOOL_EXIFTOOL = rdflib.Namespace("http://ns.exiftool.ca/ExifTool/1.0/")
-NS_EXIFTOOL_GPS = rdflib.Namespace("http://ns.exiftool.ca/EXIF/GPS/1.0/")
-NS_EXIFTOOL_SYSTEM = rdflib.Namespace("http://ns.exiftool.ca/File/System/1.0/")
-NS_EXIFTOOL_FILE = rdflib.Namespace("http://ns.exiftool.ca/File/1.0/")
-NS_EXIFTOOL_IFD0 = rdflib.Namespace("http://ns.exiftool.ca/EXIF/IFD0/1.0/")
-NS_EXIFTOOL_EXIFIFD = rdflib.Namespace("http://ns.exiftool.ca/EXIF/ExifIFD/1.0/")
-NS_EXIFTOOL_NIKON = rdflib.Namespace("http://ns.exiftool.ca/MakerNotes/Nikon/1.0/")
+NS_EXIFTOOL_COMPOSITE = rdflib.Namespace("http://ns.exiftool.org/Composite/1.0/")
+NS_EXIFTOOL_ET = rdflib.Namespace("http://ns.exiftool.org/1.0/")
+NS_EXIFTOOL_EXIFTOOL = rdflib.Namespace("http://ns.exiftool.org/ExifTool/1.0/")
+NS_EXIFTOOL_GPS = rdflib.Namespace("http://ns.exiftool.org/EXIF/GPS/1.0/")
+NS_EXIFTOOL_SYSTEM = rdflib.Namespace("http://ns.exiftool.org/File/System/1.0/")
+NS_EXIFTOOL_FILE = rdflib.Namespace("http://ns.exiftool.org/File/1.0/")
+NS_EXIFTOOL_IFD0 = rdflib.Namespace("http://ns.exiftool.org/EXIF/IFD0/1.0/")
+NS_EXIFTOOL_EXIFIFD = rdflib.Namespace("http://ns.exiftool.org/EXIF/ExifIFD/1.0/")
+NS_EXIFTOOL_NIKON = rdflib.Namespace("http://ns.exiftool.org/MakerNotes/Nikon/1.0/")
 NS_EXIFTOOL_PREVIEWIFD = rdflib.Namespace(
-    "http://ns.exiftool.ca/MakerNotes/PreviewIFD/1.0/"
+    "http://ns.exiftool.org/MakerNotes/PreviewIFD/1.0/"
 )
-NS_EXIFTOOL_INTEROPIFD = rdflib.Namespace("http://ns.exiftool.ca/EXIF/InteropIFD/1.0/")
-NS_EXIFTOOL_IFD1 = rdflib.Namespace("http://ns.exiftool.ca/EXIF/IFD1/1.0/")
+NS_EXIFTOOL_INTEROPIFD = rdflib.Namespace("http://ns.exiftool.org/EXIF/InteropIFD/1.0/")
+NS_EXIFTOOL_IFD1 = rdflib.Namespace("http://ns.exiftool.org/EXIF/IFD1/1.0/")
 
 argument_parser = argparse.ArgumentParser(epilog=__doc__)
 argument_parser.add_argument("--base-prefix", default="http://example.org/kb/")
@@ -136,7 +136,7 @@ class ExifToolRDFMapper(object):
     The implementation strategy is:
     * Iterating through an if-elif ladder of IRIs with known interpretation strategies; and
     * Lazily instantiating objects with class @property methods.
-    The lazy (or just-in-time) instantiation is because some graph objects can be needed for various reasons, but because of ExifTool's varied format coverage, it would not be appropriate to create each object each time.  For instance, on encountering GPS data in a JPEG's EXIF data (prefixes "http://ns.exiftool.ca/Composite/1.0/GPS", "http://ns.exiftool.ca/EXIF/GPS/1.0/GPS"), three things need to be created:
+    The lazy (or just-in-time) instantiation is because some graph objects can be needed for various reasons, but because of ExifTool's varied format coverage, it would not be appropriate to create each object each time.  For instance, on encountering GPS data in a JPEG's EXIF data (prefixes "http://ns.exiftool.org/Composite/1.0/GPS", "http://ns.exiftool.org/EXIF/GPS/1.0/GPS"), three things need to be created:
     * A Location object.
     * A derivation and assumption relationship between the original trace and the inferred Location object.
     * Entries in the EXIF dictionary.
@@ -182,7 +182,7 @@ class ExifToolRDFMapper(object):
         assert isinstance(n_exiftool_predicate, rdflib.URIRef)
         exiftool_iri = str(n_exiftool_predicate)
 
-        if exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSAltitude":
+        if exiftool_iri == "http://ns.exiftool.org/Composite/1.0/GPSAltitude":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 l_altitude = rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.decimal)
@@ -193,7 +193,7 @@ class ExifToolRDFMapper(object):
                         l_altitude,
                     )
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSLatitude":
+        elif exiftool_iri == "http://ns.exiftool.org/Composite/1.0/GPSLatitude":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 l_latitude = rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.decimal)
@@ -204,7 +204,7 @@ class ExifToolRDFMapper(object):
                         l_latitude,
                     )
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSLongitude":
+        elif exiftool_iri == "http://ns.exiftool.org/Composite/1.0/GPSLongitude":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 l_longitude = rdflib.Literal(v_raw.toPython(), datatype=NS_XSD.decimal)
@@ -215,11 +215,11 @@ class ExifToolRDFMapper(object):
                         l_longitude,
                     )
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/Composite/1.0/GPSPosition":
+        elif exiftool_iri == "http://ns.exiftool.org/Composite/1.0/GPSPosition":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_printconv, rdflib.Literal):
                 self.graph.add((self.n_location_object, NS_RDFS.label, v_printconv))
-        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/ExifIFD/1.0/ExifImageHeight":
+        elif exiftool_iri == "http://ns.exiftool.org/EXIF/ExifIFD/1.0/ExifImageHeight":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 self.exif_dictionary_dict["Image Height"] = v_raw
@@ -230,7 +230,7 @@ class ExifToolRDFMapper(object):
                         rdflib.Literal(int(v_raw.toPython())),
                     )
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/ExifIFD/1.0/ExifImageWidth":
+        elif exiftool_iri == "http://ns.exiftool.org/EXIF/ExifIFD/1.0/ExifImageWidth":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 self.exif_dictionary_dict["Image Width"] = v_raw
@@ -243,20 +243,20 @@ class ExifToolRDFMapper(object):
                         )
                     )
         elif exiftool_iri in {
-            "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitudeRef",
-            "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSAltitude",
-            "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitudeRef",
-            "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLatitude",
-            "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitudeRef",
-            "http://ns.exiftool.ca/EXIF/GPS/1.0/GPSLongitude",
+            "http://ns.exiftool.org/EXIF/GPS/1.0/GPSAltitudeRef",
+            "http://ns.exiftool.org/EXIF/GPS/1.0/GPSAltitude",
+            "http://ns.exiftool.org/EXIF/GPS/1.0/GPSLatitudeRef",
+            "http://ns.exiftool.org/EXIF/GPS/1.0/GPSLatitude",
+            "http://ns.exiftool.org/EXIF/GPS/1.0/GPSLongitudeRef",
+            "http://ns.exiftool.org/EXIF/GPS/1.0/GPSLongitude",
         }:
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 dict_key = exiftool_iri.replace(
-                    "http://ns.exiftool.ca/EXIF/GPS/1.0/GPS", ""
+                    "http://ns.exiftool.org/EXIF/GPS/1.0/GPS", ""
                 )
                 self.exif_dictionary_dict[dict_key] = v_raw
-        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Make":
+        elif exiftool_iri == "http://ns.exiftool.org/EXIF/IFD0/1.0/Make":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             printconv_str: typing.Optional[str] = None
             raw_str: typing.Optional[str] = None
@@ -275,19 +275,19 @@ class ExifToolRDFMapper(object):
                         n_manufacturer,
                     )
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/EXIF/IFD0/1.0/Model":
+        elif exiftool_iri == "http://ns.exiftool.org/EXIF/IFD0/1.0/Model":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 # TODO - If both values available and differ, map printconv to deviceType?
                 self.graph.add(
                     (self.n_camera_object_device_facet, NS_UCO_OBSERVABLE.model, v_raw)
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/File/1.0/MIMEType":
+        elif exiftool_iri == "http://ns.exiftool.org/File/1.0/MIMEType":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 self.mime_type = v_raw.toPython()
                 # Special case - graph logic is delayed for this IRI, because of needing to initialize the base ObservableObject based on the value.
-        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileAccessDate":
+        elif exiftool_iri == "http://ns.exiftool.org/File/System/1.0/FileAccessDate":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 self.graph.add(
@@ -300,7 +300,7 @@ class ExifToolRDFMapper(object):
                     )
                 )
         elif (
-            exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileInodeChangeDate"
+            exiftool_iri == "http://ns.exiftool.org/File/System/1.0/FileInodeChangeDate"
         ):
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
@@ -313,7 +313,7 @@ class ExifToolRDFMapper(object):
                         ),
                     )
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileModifyDate":
+        elif exiftool_iri == "http://ns.exiftool.org/File/System/1.0/FileModifyDate":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 self.graph.add(
@@ -325,11 +325,11 @@ class ExifToolRDFMapper(object):
                         ),
                     )
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileName":
+        elif exiftool_iri == "http://ns.exiftool.org/File/System/1.0/FileName":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 self.graph.add((self.n_file_facet, NS_UCO_OBSERVABLE.fileName, v_raw))
-        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FilePermissions":
+        elif exiftool_iri == "http://ns.exiftool.org/File/System/1.0/FilePermissions":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 raw = v_raw.toPython()
@@ -346,7 +346,7 @@ class ExifToolRDFMapper(object):
                 self.graph.add(
                     (self.n_unix_file_permissions_facet, NS_RDFS.comment, v_printconv)
                 )
-        elif exiftool_iri == "http://ns.exiftool.ca/File/System/1.0/FileSize":
+        elif exiftool_iri == "http://ns.exiftool.org/File/System/1.0/FileSize":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
                 self.graph.add(
@@ -406,7 +406,7 @@ class ExifToolRDFMapper(object):
 
         # Start by mapping some IRIs that affect the base observable object.
         self.map_raw_and_printconv_iri(
-            rdflib.URIRef("http://ns.exiftool.ca/File/1.0/MIMEType")
+            rdflib.URIRef("http://ns.exiftool.org/File/1.0/MIMEType")
         )
 
         # Determine slug by MIME type.
