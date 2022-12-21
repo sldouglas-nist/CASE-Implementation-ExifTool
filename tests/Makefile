@@ -15,10 +15,7 @@ SHELL := /bin/bash
 
 top_srcdir := $(shell cd .. ; pwd)
 
-PYTHON3 ?= $(shell which python3.8 2>/dev/null || which python3.7 2>/dev/null || which python3.6 2>/dev/null || which python3)
-ifeq ($(PYTHON3),)
-$(error python3 not found)
-endif
+PYTHON3 ?= python3
 
 all: \
   .venv.done.log
@@ -26,6 +23,7 @@ all: \
 	  --directory govdocs1
 
 .PHONY: \
+  check-mypy \
   download
 
 .venv.done.log: \
@@ -34,18 +32,14 @@ all: \
   $(top_srcdir)/setup.cfg \
   $(top_srcdir)/setup.py
 	rm -rf venv
-	$(PYTHON3) -m virtualenv \
-	  --python=$(PYTHON3) \
+	$(PYTHON3) -m venv \
 	  venv
 	source venv/bin/activate \
 	  && pip install \
 	    --upgrade \
 	    pip \
-	    setuptools
-	source venv/bin/activate \
-	  && cd $(top_srcdir)/dependencies/CASE-Utilities-Python \
-	    && pip install \
-	      .
+	    setuptools \
+	    wheel
 	source venv/bin/activate \
 	  && pip install \
 	    --requirement $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt
@@ -57,10 +51,18 @@ all: \
 	touch $@
 
 check: \
-  .venv.done.log
+  check-mypy
 	$(MAKE) \
 	  --directory govdocs1 \
 	  check
+
+check-mypy: \
+  .venv.done.log
+	source venv/bin/activate \
+	  && mypy \
+	    --strict \
+	    $(top_srcdir)/case_exiftool \
+	    .
 
 clean:
 	@rm -f \

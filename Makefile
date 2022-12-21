@@ -13,13 +13,10 @@
 
 SHELL := /bin/bash
 
-PYTHON3 ?= $(shell which python3.8 2>/dev/null || which python3.7 2>/dev/null || which python3.6 2>/dev/null || which python3)
-ifeq ($(PYTHON3),)
-$(error python3 not found)
-endif
+PYTHON3 ?= python3
 
-# This recipe intentionally blank.
-all:
+all: \
+  .venv-pre-commit/var/.pre-commit-built.log
 
 .PHONY: \
   download
@@ -30,12 +27,38 @@ all:
 	cd dependencies \
 	  && git diff . \
 	    | cat
-	git submodule init
-	git submodule update
+	git submodule update --init
+	$(MAKE) \
+	  --directory dependencies/CASE-Utilities-Python \
+	  .git_submodule_init.done.log
+	touch $@
+
+# This virtual environment is meant to be built once and then persist, even through 'make clean'.
+# If a recipe is written to remove this flag file, it should first run `pre-commit uninstall`.
+.venv-pre-commit/var/.pre-commit-built.log:
+	rm -rf .venv-pre-commit
+	test -r .pre-commit-config.yaml \
+	  || (echo "ERROR:Makefile:pre-commit is expected to install for this repository, but .pre-commit-config.yaml does not seem to exist." >&2 ; exit 1)
+	$(PYTHON3) -m venv \
+	  .venv-pre-commit
+	source .venv-pre-commit/bin/activate \
+	  && pip install \
+	    --upgrade \
+	    pip \
+	    setuptools \
+	    wheel
+	source .venv-pre-commit/bin/activate \
+	  && pip install \
+	    pre-commit
+	source .venv-pre-commit/bin/activate \
+	  && pre-commit install
+	mkdir -p \
+	  .venv-pre-commit/var
 	touch $@
 
 check: \
-  dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt
+  .git_submodule_init.done.log \
+  .venv-pre-commit/var/.pre-commit-built.log
 	$(MAKE) \
 	  --directory tests \
 	  check
@@ -50,34 +73,19 @@ clean:
 	  clean
 	@#A full clean here erases test files and causes unnecessary rebuilding for the purposes of testing ExifTool mapping.
 	@rm -f \
-	  dependencies/CASE-Examples-QC/.lib.done.log
-
-dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt: \
-  .git_submodule_init.done.log
-	$(MAKE) \
-	  PYTHON3=$(PYTHON3) \
-	  --directory dependencies/CASE-Examples-QC \
-	  .git_submodule_init.done.log \
-	  .lib.done.log \
-	  .venv.done.log
-	$(MAKE) \
-	  PYTHON3=$(PYTHON3) \
-	  --directory dependencies/CASE-Examples-QC/tests \
-	  ontology_vocabulary.txt
-	test -r $@
+	  dependencies/CASE-Utilities-Python/.lib.done.log
 
 distclean: \
   clean
 	@rm -f \
-	  .git_submodule_init.done.log \
-	  dependencies/CASE-Examples-QC/.lib.done.log \
-	  dependencies/CASE-Examples-QC/lib/rdf-toolkit.jar
+	  .git_submodule_init.done.log
 	@$(MAKE) \
 	  --directory tests \
 	  distclean
 
 download: \
-  dependencies/CASE-Examples-QC/tests/ontology_vocabulary.txt
+  .git_submodule_init.done.log \
+  .venv-pre-commit/var/.pre-commit-built.log
 	$(MAKE) \
 	  --directory tests \
 	  download
