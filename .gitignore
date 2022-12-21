@@ -2,6 +2,7 @@
 *.swp
 .DS_Store
 .git_submodule_init.done.log
+.venv-pre-commit
 __pycache__
 build
 dist
