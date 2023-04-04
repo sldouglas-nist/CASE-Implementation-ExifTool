@@ -379,6 +379,7 @@ class ExifToolRDFMapper(object):
         * self._kv_dict_raw
         * self._exiftool_predicate_iris
         """
+
         # Output key: Graph predicate from file RDF-corrected IRI.
         # Output value: Object (whether Literal or URIRef).
         def _load_xml_file_into_dict(
