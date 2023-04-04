@@ -31,5 +31,7 @@ WHERE {
     )
     iris = set()
     for result in graph.query(query):
+        assert isinstance(result, rdflib.query.ResultRow)
+        assert isinstance(result[0], rdflib.term.IdentifiedNode)
         iris.add(result[0].toPython())
     assert len(iris) == 1
