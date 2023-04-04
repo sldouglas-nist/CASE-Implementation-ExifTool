@@ -15,7 +15,7 @@
 This tool parses the RDF output of ExifTool, mapping it into UCO properties and relationships-of-assumption.  An analyst should later annotate the output with their beliefs on its verity.
 """
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 import argparse
 import contextlib
@@ -379,6 +379,7 @@ class ExifToolRDFMapper(object):
         * self._kv_dict_raw
         * self._exiftool_predicate_iris
         """
+
         # Output key: Graph predicate from file RDF-corrected IRI.
         # Output value: Object (whether Literal or URIRef).
         def _load_xml_file_into_dict(
