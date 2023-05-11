@@ -21,91 +21,91 @@
 @prefix uco-types: <https://ontology.unifiedcyberontology.org/uco/types/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-kb:content-data-facet-edd0364e-db80-5369-aab1-411475d5bca5
+kb:ContentDataFacet-edd0364e-db80-5369-aab1-411475d5bca5
 	a uco-observable:ContentDataFacet ;
 	uco-observable:mimeType "image/jpeg" ;
 	uco-observable:sizeInBytes "1526008"^^xsd:integer ;
 	.
 
-kb:controlled-dictionary-eb680e18-7f80-580e-b4e4-4396f8209f60
+kb:ControlledDictionary-eb680e18-7f80-580e-b4e4-4396f8209f60
 	a uco-types:ControlledDictionary ;
 	uco-types:entry
-		kb:controlled-dictionary-entry-2313085a-127d-5166-97ec-8f16fe66ef63 ,
-		kb:controlled-dictionary-entry-68d966a5-6cae-543c-979f-6ea4e1ed4773 ,
-		kb:controlled-dictionary-entry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09 ,
-		kb:controlled-dictionary-entry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9 ,
-		kb:controlled-dictionary-entry-afc576d0-c021-5103-9bfb-d0e92032214b ,
-		kb:controlled-dictionary-entry-baae711e-4783-5ef3-af63-b464a90a3a1f ,
-		kb:controlled-dictionary-entry-bb71ecca-2d74-555b-b5de-ea28f3be58d3 ,
-		kb:controlled-dictionary-entry-ebc4000a-c628-5c37-b6e9-f503d64c87ee
+		kb:ControlledDictionaryEntry-2313085a-127d-5166-97ec-8f16fe66ef63 ,
+		kb:ControlledDictionaryEntry-68d966a5-6cae-543c-979f-6ea4e1ed4773 ,
+		kb:ControlledDictionaryEntry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09 ,
+		kb:ControlledDictionaryEntry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9 ,
+		kb:ControlledDictionaryEntry-afc576d0-c021-5103-9bfb-d0e92032214b ,
+		kb:ControlledDictionaryEntry-baae711e-4783-5ef3-af63-b464a90a3a1f ,
+		kb:ControlledDictionaryEntry-bb71ecca-2d74-555b-b5de-ea28f3be58d3 ,
+		kb:ControlledDictionaryEntry-ebc4000a-c628-5c37-b6e9-f503d64c87ee
 		;
 	.
 
-kb:controlled-dictionary-entry-2313085a-127d-5166-97ec-8f16fe66ef63
+kb:ControlledDictionaryEntry-2313085a-127d-5166-97ec-8f16fe66ef63
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "Longitude" ;
 	uco-types:value "89.3175" ;
 	.
 
-kb:controlled-dictionary-entry-68d966a5-6cae-543c-979f-6ea4e1ed4773
+kb:ControlledDictionaryEntry-68d966a5-6cae-543c-979f-6ea4e1ed4773
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "Altitude" ;
 	uco-types:value "151" ;
 	.
 
-kb:controlled-dictionary-entry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09
+kb:ControlledDictionaryEntry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "LatitudeRef" ;
 	uco-types:value "N" ;
 	.
 
-kb:controlled-dictionary-entry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9
+kb:ControlledDictionaryEntry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "AltitudeRef" ;
 	uco-types:value "0" ;
 	.
 
-kb:controlled-dictionary-entry-afc576d0-c021-5103-9bfb-d0e92032214b
+kb:ControlledDictionaryEntry-afc576d0-c021-5103-9bfb-d0e92032214b
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "LongitudeRef" ;
 	uco-types:value "W" ;
 	.
 
-kb:controlled-dictionary-entry-baae711e-4783-5ef3-af63-b464a90a3a1f
+kb:ControlledDictionaryEntry-baae711e-4783-5ef3-af63-b464a90a3a1f
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "Image Width" ;
 	uco-types:value "3008" ;
 	.
 
-kb:controlled-dictionary-entry-bb71ecca-2d74-555b-b5de-ea28f3be58d3
+kb:ControlledDictionaryEntry-bb71ecca-2d74-555b-b5de-ea28f3be58d3
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "Image Height" ;
 	uco-types:value "1960" ;
 	.
 
-kb:controlled-dictionary-entry-ebc4000a-c628-5c37-b6e9-f503d64c87ee
+kb:ControlledDictionaryEntry-ebc4000a-c628-5c37-b6e9-f503d64c87ee
 	a uco-types:ControlledDictionaryEntry ;
 	uco-types:key "Latitude" ;
 	uco-types:value "30.3055" ;
 	.
 
-kb:device-f44d3f9e-978a-5f07-8873-0879ff9d4a92
+kb:Device-f44d3f9e-978a-5f07-8873-0879ff9d4a92
 	a uco-observable:ObservableObject ;
-	uco-core:hasFacet kb:device-facet-3c18a7ce-d356-5540-940c-074f65891479 ;
+	uco-core:hasFacet kb:DeviceFacet-3c18a7ce-d356-5540-940c-074f65891479 ;
 	.
 
-kb:device-facet-3c18a7ce-d356-5540-940c-074f65891479
+kb:DeviceFacet-3c18a7ce-d356-5540-940c-074f65891479
 	a uco-observable:DeviceFacet ;
-	uco-observable:manufacturer kb:identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5 ;
+	uco-observable:manufacturer kb:Identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5 ;
 	uco-observable:model "NIKON D1X" ;
 	.
 
-kb:exif-facet-b461c9e3-5599-582e-b765-06c095ac9aa4
+kb:EXIFFacet-b461c9e3-5599-582e-b765-06c095ac9aa4
 	a uco-observable:EXIFFacet ;
-	uco-observable:exifData kb:controlled-dictionary-eb680e18-7f80-580e-b4e4-4396f8209f60 ;
+	uco-observable:exifData kb:ControlledDictionary-eb680e18-7f80-580e-b4e4-4396f8209f60 ;
 	.
 
-kb:file-facet-449bbdbd-7b93-54fd-95ab-7bb9b2939488
+kb:FileFacet-449bbdbd-7b93-54fd-95ab-7bb9b2939488
 	a uco-observable:FileFacet ;
 	uco-observable:accessedTime "2020-01-01T21:50:06-05:00"^^xsd:dateTime ;
 	uco-observable:fileName "799987.jpg" ;
@@ -113,25 +113,25 @@ kb:file-facet-449bbdbd-7b93-54fd-95ab-7bb9b2939488
 	uco-observable:modifiedTime "2005-01-01T12:58:00-04:00"^^xsd:dateTime ;
 	.
 
-kb:identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5
+kb:Identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5
 	a uco-identity:Identity ;
 	uco-core:name "NIKON CORPORATION" ;
 	.
 
-kb:lat-long-coordinates-facet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04
+kb:LatLongCoordinatesFacet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04
 	a uco-location:LatLongCoordinatesFacet ;
 	uco-location:altitude "151.0"^^xsd:decimal ;
 	uco-location:latitude "30.3055"^^xsd:decimal ;
 	uco-location:longitude "-89.3175"^^xsd:decimal ;
 	.
 
-kb:location-87e04bf8-27ed-5209-9d19-753c65ce28a3
+kb:Location-87e04bf8-27ed-5209-9d19-753c65ce28a3
 	a uco-location:Location ;
 	rdfs:label "30 deg 18' 19.80\" N, 89 deg 19' 3.00\" W" ;
-	uco-core:hasFacet kb:lat-long-coordinates-facet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04 ;
+	uco-core:hasFacet kb:LatLongCoordinatesFacet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04 ;
 	.
 
-kb:picture-41679402-5530-56a5-befe-fda477b006e5
+kb:Picture-41679402-5530-56a5-befe-fda477b006e5
 	a uco-observable:ObservableObject ;
 	exiftool-et:toolkit "Image::ExifTool 12.52" ;
 	exiftool-Composite:Aperture
@@ -486,30 +486,30 @@ kb:picture-41679402-5530-56a5-befe-fda477b006e5
 		;
 	exiftool-PreviewIFD:YResolution "300" ;
 	uco-core:hasFacet
-		kb:content-data-facet-edd0364e-db80-5369-aab1-411475d5bca5 ,
-		kb:exif-facet-b461c9e3-5599-582e-b765-06c095ac9aa4 ,
-		kb:file-facet-449bbdbd-7b93-54fd-95ab-7bb9b2939488 ,
-		kb:raster-picture-facet-25675bc4-e12a-53df-9779-e0fe1b76453a ,
-		kb:unix-file-permissions-facet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22
+		kb:ContentDataFacet-edd0364e-db80-5369-aab1-411475d5bca5 ,
+		kb:EXIFFacet-b461c9e3-5599-582e-b765-06c095ac9aa4 ,
+		kb:FileFacet-449bbdbd-7b93-54fd-95ab-7bb9b2939488 ,
+		kb:RasterPictureFacet-25675bc4-e12a-53df-9779-e0fe1b76453a ,
+		kb:UNIXFilePermissionsFacet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22
 		;
 	.
 
-kb:raster-picture-facet-25675bc4-e12a-53df-9779-e0fe1b76453a
+kb:RasterPictureFacet-25675bc4-e12a-53df-9779-e0fe1b76453a
 	a uco-observable:RasterPictureFacet ;
 	uco-observable:pictureHeight "1960"^^xsd:integer ;
 	uco-observable:pictureType "jpg" ;
 	uco-observable:pictureWidth "3008"^^xsd:integer ;
 	.
 
-kb:relationship-08e45f3c-8d7d-5034-a19e-f4f6e1f06b17
+kb:Relationship-08e45f3c-8d7d-5034-a19e-f4f6e1f06b17
 	a uco-core:Relationship ;
 	uco-core:isDirectional "true"^^xsd:boolean ;
 	uco-core:kindOfRelationship "Extracted_From" ;
-	uco-core:source kb:location-87e04bf8-27ed-5209-9d19-753c65ce28a3 ;
-	uco-core:target kb:picture-41679402-5530-56a5-befe-fda477b006e5 ;
+	uco-core:source kb:Location-87e04bf8-27ed-5209-9d19-753c65ce28a3 ;
+	uco-core:target kb:Picture-41679402-5530-56a5-befe-fda477b006e5 ;
 	.
 
-kb:unix-file-permissions-facet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22
+kb:UNIXFilePermissionsFacet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22
 	a uco-observable:UNIXFilePermissionsFacet ;
 	rdfs:comment "-rw-r--r--" ;
 	.

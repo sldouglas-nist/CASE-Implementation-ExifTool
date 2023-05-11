@@ -24,7 +24,7 @@
     },
     "@graph": [
         {
-            "@id": "kb:content-data-facet-edd0364e-db80-5369-aab1-411475d5bca5",
+            "@id": "kb:ContentDataFacet-edd0364e-db80-5369-aab1-411475d5bca5",
             "@type": "uco-observable:ContentDataFacet",
             "uco-observable:mimeType": "image/jpeg",
             "uco-observable:sizeInBytes": {
@@ -33,107 +33,107 @@
             }
         },
         {
-            "@id": "kb:controlled-dictionary-eb680e18-7f80-580e-b4e4-4396f8209f60",
+            "@id": "kb:ControlledDictionary-eb680e18-7f80-580e-b4e4-4396f8209f60",
             "@type": "uco-types:ControlledDictionary",
             "uco-types:entry": [
                 {
-                    "@id": "kb:controlled-dictionary-entry-2313085a-127d-5166-97ec-8f16fe66ef63"
+                    "@id": "kb:ControlledDictionaryEntry-2313085a-127d-5166-97ec-8f16fe66ef63"
                 },
                 {
-                    "@id": "kb:controlled-dictionary-entry-68d966a5-6cae-543c-979f-6ea4e1ed4773"
+                    "@id": "kb:ControlledDictionaryEntry-68d966a5-6cae-543c-979f-6ea4e1ed4773"
                 },
                 {
-                    "@id": "kb:controlled-dictionary-entry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09"
+                    "@id": "kb:ControlledDictionaryEntry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09"
                 },
                 {
-                    "@id": "kb:controlled-dictionary-entry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9"
+                    "@id": "kb:ControlledDictionaryEntry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9"
                 },
                 {
-                    "@id": "kb:controlled-dictionary-entry-afc576d0-c021-5103-9bfb-d0e92032214b"
+                    "@id": "kb:ControlledDictionaryEntry-afc576d0-c021-5103-9bfb-d0e92032214b"
                 },
                 {
-                    "@id": "kb:controlled-dictionary-entry-baae711e-4783-5ef3-af63-b464a90a3a1f"
+                    "@id": "kb:ControlledDictionaryEntry-baae711e-4783-5ef3-af63-b464a90a3a1f"
                 },
                 {
-                    "@id": "kb:controlled-dictionary-entry-bb71ecca-2d74-555b-b5de-ea28f3be58d3"
+                    "@id": "kb:ControlledDictionaryEntry-bb71ecca-2d74-555b-b5de-ea28f3be58d3"
                 },
                 {
-                    "@id": "kb:controlled-dictionary-entry-ebc4000a-c628-5c37-b6e9-f503d64c87ee"
+                    "@id": "kb:ControlledDictionaryEntry-ebc4000a-c628-5c37-b6e9-f503d64c87ee"
                 }
             ]
         },
         {
-            "@id": "kb:controlled-dictionary-entry-2313085a-127d-5166-97ec-8f16fe66ef63",
+            "@id": "kb:ControlledDictionaryEntry-2313085a-127d-5166-97ec-8f16fe66ef63",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "Longitude",
             "uco-types:value": "89.3175"
         },
         {
-            "@id": "kb:controlled-dictionary-entry-68d966a5-6cae-543c-979f-6ea4e1ed4773",
+            "@id": "kb:ControlledDictionaryEntry-68d966a5-6cae-543c-979f-6ea4e1ed4773",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "Altitude",
             "uco-types:value": "151"
         },
         {
-            "@id": "kb:controlled-dictionary-entry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09",
+            "@id": "kb:ControlledDictionaryEntry-783cf7be-cfc6-56a9-ac87-970ec7ef5c09",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "LatitudeRef",
             "uco-types:value": "N"
         },
         {
-            "@id": "kb:controlled-dictionary-entry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9",
+            "@id": "kb:ControlledDictionaryEntry-ae1f4126-fd3e-5e6a-b11f-d441e44cc4a9",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "AltitudeRef",
             "uco-types:value": "0"
         },
         {
-            "@id": "kb:controlled-dictionary-entry-afc576d0-c021-5103-9bfb-d0e92032214b",
+            "@id": "kb:ControlledDictionaryEntry-afc576d0-c021-5103-9bfb-d0e92032214b",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "LongitudeRef",
             "uco-types:value": "W"
         },
         {
-            "@id": "kb:controlled-dictionary-entry-baae711e-4783-5ef3-af63-b464a90a3a1f",
+            "@id": "kb:ControlledDictionaryEntry-baae711e-4783-5ef3-af63-b464a90a3a1f",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "Image Width",
             "uco-types:value": "3008"
         },
         {
-            "@id": "kb:controlled-dictionary-entry-bb71ecca-2d74-555b-b5de-ea28f3be58d3",
+            "@id": "kb:ControlledDictionaryEntry-bb71ecca-2d74-555b-b5de-ea28f3be58d3",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "Image Height",
             "uco-types:value": "1960"
         },
         {
-            "@id": "kb:controlled-dictionary-entry-ebc4000a-c628-5c37-b6e9-f503d64c87ee",
+            "@id": "kb:ControlledDictionaryEntry-ebc4000a-c628-5c37-b6e9-f503d64c87ee",
             "@type": "uco-types:ControlledDictionaryEntry",
             "uco-types:key": "Latitude",
             "uco-types:value": "30.3055"
         },
         {
-            "@id": "kb:device-f44d3f9e-978a-5f07-8873-0879ff9d4a92",
+            "@id": "kb:Device-f44d3f9e-978a-5f07-8873-0879ff9d4a92",
             "@type": "uco-observable:ObservableObject",
             "uco-core:hasFacet": {
-                "@id": "kb:device-facet-3c18a7ce-d356-5540-940c-074f65891479"
+                "@id": "kb:DeviceFacet-3c18a7ce-d356-5540-940c-074f65891479"
             }
         },
         {
-            "@id": "kb:device-facet-3c18a7ce-d356-5540-940c-074f65891479",
+            "@id": "kb:DeviceFacet-3c18a7ce-d356-5540-940c-074f65891479",
             "@type": "uco-observable:DeviceFacet",
             "uco-observable:manufacturer": {
-                "@id": "kb:identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5"
+                "@id": "kb:Identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5"
             },
             "uco-observable:model": "NIKON D1X"
         },
         {
-            "@id": "kb:exif-facet-b461c9e3-5599-582e-b765-06c095ac9aa4",
+            "@id": "kb:EXIFFacet-b461c9e3-5599-582e-b765-06c095ac9aa4",
             "@type": "uco-observable:EXIFFacet",
             "uco-observable:exifData": {
-                "@id": "kb:controlled-dictionary-eb680e18-7f80-580e-b4e4-4396f8209f60"
+                "@id": "kb:ControlledDictionary-eb680e18-7f80-580e-b4e4-4396f8209f60"
             }
         },
         {
-            "@id": "kb:file-facet-449bbdbd-7b93-54fd-95ab-7bb9b2939488",
+            "@id": "kb:FileFacet-449bbdbd-7b93-54fd-95ab-7bb9b2939488",
             "@type": "uco-observable:FileFacet",
             "uco-observable:accessedTime": {
                 "@type": "xsd:dateTime",
@@ -150,12 +150,12 @@
             }
         },
         {
-            "@id": "kb:identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5",
+            "@id": "kb:Identity-aa26947e-5bc6-5da1-a07e-a6102e85dea5",
             "@type": "uco-identity:Identity",
             "uco-core:name": "NIKON CORPORATION"
         },
         {
-            "@id": "kb:lat-long-coordinates-facet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04",
+            "@id": "kb:LatLongCoordinatesFacet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04",
             "@type": "uco-location:LatLongCoordinatesFacet",
             "uco-location:altitude": {
                 "@type": "xsd:decimal",
@@ -171,15 +171,15 @@
             }
         },
         {
-            "@id": "kb:location-87e04bf8-27ed-5209-9d19-753c65ce28a3",
+            "@id": "kb:Location-87e04bf8-27ed-5209-9d19-753c65ce28a3",
             "@type": "uco-location:Location",
             "rdfs:label": "30 deg 18' 19.80\" N, 89 deg 19' 3.00\" W",
             "uco-core:hasFacet": {
-                "@id": "kb:lat-long-coordinates-facet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04"
+                "@id": "kb:LatLongCoordinatesFacet-e4d0e2fc-4a75-5771-9710-dcffb21eeb04"
             }
         },
         {
-            "@id": "kb:picture-41679402-5530-56a5-befe-fda477b006e5",
+            "@id": "kb:Picture-41679402-5530-56a5-befe-fda477b006e5",
             "@type": "uco-observable:ObservableObject",
             "exiftool-et:toolkit": "Image::ExifTool 12.52",
             "exiftool-Composite:Aperture": [
@@ -541,24 +541,24 @@
             "exiftool-PreviewIFD:YResolution": "300",
             "uco-core:hasFacet": [
                 {
-                    "@id": "kb:content-data-facet-edd0364e-db80-5369-aab1-411475d5bca5"
+                    "@id": "kb:ContentDataFacet-edd0364e-db80-5369-aab1-411475d5bca5"
                 },
                 {
-                    "@id": "kb:exif-facet-b461c9e3-5599-582e-b765-06c095ac9aa4"
+                    "@id": "kb:EXIFFacet-b461c9e3-5599-582e-b765-06c095ac9aa4"
                 },
                 {
-                    "@id": "kb:file-facet-449bbdbd-7b93-54fd-95ab-7bb9b2939488"
+                    "@id": "kb:FileFacet-449bbdbd-7b93-54fd-95ab-7bb9b2939488"
                 },
                 {
-                    "@id": "kb:raster-picture-facet-25675bc4-e12a-53df-9779-e0fe1b76453a"
+                    "@id": "kb:RasterPictureFacet-25675bc4-e12a-53df-9779-e0fe1b76453a"
                 },
                 {
-                    "@id": "kb:unix-file-permissions-facet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22"
+                    "@id": "kb:UNIXFilePermissionsFacet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22"
                 }
             ]
         },
         {
-            "@id": "kb:raster-picture-facet-25675bc4-e12a-53df-9779-e0fe1b76453a",
+            "@id": "kb:RasterPictureFacet-25675bc4-e12a-53df-9779-e0fe1b76453a",
             "@type": "uco-observable:RasterPictureFacet",
             "uco-observable:pictureHeight": {
                 "@type": "xsd:integer",
@@ -571,7 +571,7 @@
             }
         },
         {
-            "@id": "kb:relationship-08e45f3c-8d7d-5034-a19e-f4f6e1f06b17",
+            "@id": "kb:Relationship-08e45f3c-8d7d-5034-a19e-f4f6e1f06b17",
             "@type": "uco-core:Relationship",
             "uco-core:isDirectional": {
                 "@type": "xsd:boolean",
@@ -579,14 +579,14 @@
             },
             "uco-core:kindOfRelationship": "Extracted_From",
             "uco-core:source": {
-                "@id": "kb:location-87e04bf8-27ed-5209-9d19-753c65ce28a3"
+                "@id": "kb:Location-87e04bf8-27ed-5209-9d19-753c65ce28a3"
             },
             "uco-core:target": {
-                "@id": "kb:picture-41679402-5530-56a5-befe-fda477b006e5"
+                "@id": "kb:Picture-41679402-5530-56a5-befe-fda477b006e5"
             }
         },
         {
-            "@id": "kb:unix-file-permissions-facet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22",
+            "@id": "kb:UNIXFilePermissionsFacet-752e9d1c-2a7e-5f67-9c34-17cfd2b78d22",
             "@type": "uco-observable:UNIXFilePermissionsFacet",
             "rdfs:comment": "-rw-r--r--"
         }
