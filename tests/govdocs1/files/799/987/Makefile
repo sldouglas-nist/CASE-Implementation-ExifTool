@@ -55,6 +55,7 @@ analysis.ttl: \
 	      --output-format turtle \
 	      --print-conv-xml 799987_printConv.xml \
 	      --raw-xml 799987_raw.xml \
+	      --use-deterministic-uuids \
 	      __$@
 	source $(top_srcdir)/tests/venv/bin/activate \
 	  && case_validate \

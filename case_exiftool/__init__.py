@@ -15,7 +15,7 @@
 This tool parses the RDF output of ExifTool, mapping it into UCO properties and relationships-of-assumption.  An analyst should later annotate the output with their beliefs on its verity.
 """
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 import argparse
 import contextlib
@@ -23,7 +23,7 @@ import logging
 import os
 import typing
 
-import case_utils
+import case_utils.inherent_uuid
 import rdflib.plugins.sparql
 import rdflib.util
 from case_utils.namespace import (
@@ -70,6 +70,11 @@ argument_parser.add_argument(
     required=True,
 )
 argument_parser.add_argument(
+    "--use-deterministic-uuids",
+    action="store_true",
+    help="Use UUIDs computed using the case_utils.inherent_uuid module.",
+)
+argument_parser.add_argument(
     "out_graph",
     help="A self-contained RDF graph file, in the format either requested by --output-format or guessed based on extension.",
 )
@@ -81,7 +86,7 @@ def controlled_dictionary_object_to_node(
     controlled_dict: typing.Dict[str, rdflib.Literal],
 ) -> rdflib.URIRef:
     n_controlled_dictionary = ns_base[
-        "controlled-dictionary-" + case_utils.local_uuid.local_uuid()
+        "ControlledDictionary-" + case_utils.local_uuid.local_uuid()
     ]
     graph.add((n_controlled_dictionary, NS_RDF.type, NS_UCO_TYPES.ControlledDictionary))
     for key in sorted(controlled_dict.keys()):
@@ -92,7 +97,7 @@ def controlled_dictionary_object_to_node(
             _logger.info("v_value = %r." % v_value)
             raise
         n_entry = ns_base[
-            "controlled-dictionary-entry-" + case_utils.local_uuid.local_uuid()
+            "ControlledDictionaryEntry-" + case_utils.local_uuid.local_uuid()
         ]
         graph.add((n_controlled_dictionary, NS_UCO_TYPES.entry, n_entry))
         graph.add((n_entry, NS_RDF.type, NS_UCO_TYPES.ControlledDictionaryEntry))
@@ -114,7 +119,7 @@ def manufacturer_name_to_node(
     """
     n_manufacturer: typing.Optional[rdflib.URIRef] = None
     if printconv_name is not None or raw_name is not None:
-        n_manufacturer = ns_base["identity-" + case_utils.local_uuid.local_uuid()]
+        n_manufacturer = ns_base["Identity-" + case_utils.local_uuid.local_uuid()]
         graph.add((n_manufacturer, NS_RDF.type, NS_UCO_IDENTITY.Identity))
 
     if printconv_name is not None:
@@ -145,13 +150,23 @@ class ExifToolRDFMapper(object):
     Those interested in extending this tool's mapping coverage of ExifTool IRIs are encouraged to update the method map_raw_and_printconv_iri.
     """
 
-    def __init__(self, graph: rdflib.Graph, ns_base: rdflib.Namespace) -> None:
+    def __init__(
+        self,
+        graph: rdflib.Graph,
+        ns_base: rdflib.Namespace,
+        *args: typing.Any,
+        use_deterministic_uuids: bool = False,
+        **kwargs: typing.Any,
+    ) -> None:
         assert isinstance(graph, rdflib.Graph)
 
         self._exif_dictionary_dict: typing.Optional[
             typing.Dict[str, rdflib.Literal]
         ] = None
         self._graph = graph
+
+        self._use_deterministic_uuids = use_deterministic_uuids
+
         self._kv_dict_raw: typing.Dict[rdflib.URIRef, rdflib.term.Node] = dict()
         self._kv_dict_printconv: typing.Dict[rdflib.URIRef, rdflib.term.Node] = dict()
         self._mime_type: typing.Optional[str] = None
@@ -411,9 +426,9 @@ class ExifToolRDFMapper(object):
         )
 
         # Determine slug by MIME type.
-        self.oo_slug = "file-"  # The prefix "oo_" means generic observable object.
+        self.oo_slug = "File-"  # The prefix "oo_" means generic observable object.
         if self.mime_type == "image/jpeg":
-            self.oo_slug = "picture-"
+            self.oo_slug = "Picture-"
         else:
             _logger.warning("TODO - MIME type %r not yet implemented." % self.mime_type)
 
@@ -509,7 +524,7 @@ class ExifToolRDFMapper(object):
         """
         if self._n_camera_object is None:
             self._n_camera_object = self.ns_base[
-                "device-" + case_utils.local_uuid.local_uuid()
+                "Device-" + case_utils.local_uuid.local_uuid()
             ]
             self.graph.add(
                 (self._n_camera_object, NS_RDF.type, NS_UCO_OBSERVABLE.ObservableObject)
@@ -522,9 +537,18 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_camera_object_device_facet is None:
-            self._n_camera_object_device_facet = self.ns_base[
-                "device-facet-" + case_utils.local_uuid.local_uuid()
-            ]
+            if self.use_deterministic_uuids:
+                self._n_camera_object_device_facet = (
+                    case_utils.inherent_uuid.get_facet_uriref(
+                        self.n_camera_object,
+                        NS_UCO_OBSERVABLE.DeviceFacet,
+                        namespace=self.ns_base,
+                    )
+                )
+            else:
+                self._n_camera_object_device_facet = self.ns_base[
+                    "DeviceFacet-" + case_utils.local_uuid.local_uuid()
+                ]
             self.graph.add(
                 (
                     self._n_camera_object_device_facet,
@@ -547,9 +571,16 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_content_data_facet is None:
-            self._n_content_data_facet = self.ns_base[
-                "content-data-facet-" + case_utils.local_uuid.local_uuid()
-            ]
+            if self.use_deterministic_uuids:
+                self._n_content_data_facet = case_utils.inherent_uuid.get_facet_uriref(
+                    self.n_observable_object,
+                    NS_UCO_OBSERVABLE.ContentDataFacet,
+                    namespace=self.ns_base,
+                )
+            else:
+                self._n_content_data_facet = self.ns_base[
+                    "ContentDataFacet-" + case_utils.local_uuid.local_uuid()
+                ]
             self.graph.add(
                 (
                     self._n_content_data_facet,
@@ -590,9 +621,16 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_exif_facet is None:
-            self._n_exif_facet = self.ns_base[
-                "exif-facet-" + case_utils.local_uuid.local_uuid()
-            ]
+            if self.use_deterministic_uuids:
+                self._n_exif_facet = case_utils.inherent_uuid.get_facet_uriref(
+                    self.n_observable_object,
+                    NS_UCO_OBSERVABLE.EXIFFacet,
+                    namespace=self.ns_base,
+                )
+            else:
+                self._n_exif_facet = self.ns_base[
+                    "EXIFFacet-" + case_utils.local_uuid.local_uuid()
+                ]
             self.graph.add(
                 (self._n_exif_facet, NS_RDF.type, NS_UCO_OBSERVABLE.EXIFFacet)
             )
@@ -607,9 +645,16 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_file_facet is None:
-            self._n_file_facet = self.ns_base[
-                "file-facet-" + case_utils.local_uuid.local_uuid()
-            ]
+            if self.use_deterministic_uuids:
+                self._n_file_facet = case_utils.inherent_uuid.get_facet_uriref(
+                    self.n_observable_object,
+                    NS_UCO_OBSERVABLE.FileFacet,
+                    namespace=self.ns_base,
+                )
+            else:
+                self._n_file_facet = self.ns_base[
+                    "FileFacet-" + case_utils.local_uuid.local_uuid()
+                ]
             self.graph.add(
                 (self._n_file_facet, NS_RDF.type, NS_UCO_OBSERVABLE.FileFacet)
             )
@@ -625,7 +670,7 @@ class ExifToolRDFMapper(object):
         """
         if self._n_location_object is None:
             self._n_location_object = self.ns_base[
-                "location-" + case_utils.local_uuid.local_uuid()
+                "Location-" + case_utils.local_uuid.local_uuid()
             ]
             self.graph.add(
                 (self._n_location_object, NS_RDF.type, NS_UCO_LOCATION.Location)
@@ -638,9 +683,18 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_location_object_latlong_facet is None:
-            self._n_location_object_latlong_facet = self.ns_base[
-                "lat-long-coordinates-facet-" + case_utils.local_uuid.local_uuid()
-            ]
+            if self.use_deterministic_uuids:
+                self._n_location_object_latlong_facet = (
+                    case_utils.inherent_uuid.get_facet_uriref(
+                        self.n_location_object,
+                        NS_UCO_LOCATION.LatLongCoordinatesFacet,
+                        namespace=self.ns_base,
+                    )
+                )
+            else:
+                self._n_location_object_latlong_facet = self.ns_base[
+                    "LatLongCoordinatesFacet-" + case_utils.local_uuid.local_uuid()
+                ]
             self.graph.add(
                 (
                     self._n_location_object_latlong_facet,
@@ -683,9 +737,18 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_raster_picture_facet is None:
-            self._n_raster_picture_facet = self.ns_base[
-                "raster-picture-facet-" + case_utils.local_uuid.local_uuid()
-            ]
+            if self.use_deterministic_uuids:
+                self._n_raster_picture_facet = (
+                    case_utils.inherent_uuid.get_facet_uriref(
+                        self.n_observable_object,
+                        NS_UCO_OBSERVABLE.RasterPictureFacet,
+                        namespace=self.ns_base,
+                    )
+                )
+            else:
+                self._n_raster_picture_facet = self.ns_base[
+                    "RasterPictureFacet-" + case_utils.local_uuid.local_uuid()
+                ]
             self.graph.add(
                 (
                     self._n_raster_picture_facet,
@@ -709,7 +772,7 @@ class ExifToolRDFMapper(object):
         """
         if self._n_relationship_object_location is None:
             self._n_relationship_object_location = self.ns_base[
-                "relationship-" + case_utils.local_uuid.local_uuid()
+                "Relationship-" + case_utils.local_uuid.local_uuid()
             ]
             self.graph.add(
                 (
@@ -754,9 +817,18 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_unix_file_permissions_facet is None:
-            self._n_unix_file_permissions_facet = self.ns_base[
-                "unix-file-permissions-facet-" + case_utils.local_uuid.local_uuid()
-            ]
+            if self.use_deterministic_uuids:
+                self._n_unix_file_permissions_facet = (
+                    case_utils.inherent_uuid.get_facet_uriref(
+                        self.n_observable_object,
+                        NS_UCO_OBSERVABLE.UNIXFilePermissionsFacet,
+                        namespace=self.ns_base,
+                    )
+                )
+            else:
+                self._n_unix_file_permissions_facet = self.ns_base[
+                    "UNIXFilePermissionsFacet-" + case_utils.local_uuid.local_uuid()
+                ]
             self.graph.add(
                 (
                     self._n_unix_file_permissions_facet,
@@ -791,6 +863,13 @@ class ExifToolRDFMapper(object):
         assert isinstance(value, str)
         self._oo_slug = value
 
+    @property
+    def use_deterministic_uuids(self) -> bool:
+        """
+        No setter provided.
+        """
+        return self._use_deterministic_uuids
+
 
 def main() -> None:
     case_utils.local_uuid.configure()
@@ -820,7 +899,9 @@ def main() -> None:
     out_graph.namespace_manager.bind("uco-observable", NS_UCO_OBSERVABLE)
     out_graph.namespace_manager.bind("uco-types", NS_UCO_TYPES)
 
-    exiftool_rdf_mapper = ExifToolRDFMapper(out_graph, NS_BASE)
+    exiftool_rdf_mapper = ExifToolRDFMapper(
+        out_graph, NS_BASE, use_deterministic_uuids=args.use_deterministic_uuids
+    )
     exiftool_rdf_mapper.map_raw_and_printconv_rdf(args.raw_xml, args.print_conv_xml)
 
     # _logger.debug("args.output_format = %r." % args.output_format)
