@@ -28,7 +28,6 @@ all: \
 
 .venv.done.log: \
   $(top_srcdir)/.git_submodule_init.done.log \
-  $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt \
   $(top_srcdir)/setup.cfg \
   $(top_srcdir)/setup.py
 	rm -rf venv
@@ -42,12 +41,8 @@ all: \
 	    wheel
 	source venv/bin/activate \
 	  && pip install \
-	    --requirement $(top_srcdir)/dependencies/CASE-Utilities-Python/tests/requirements.txt
-	source venv/bin/activate \
-	  && cd $(top_srcdir) \
-	    && pip install \
-	      --editable \
-	      .
+	    --editable \
+	    $(top_srcdir)[testing]
 	touch $@
 
 check: \
