@@ -24,6 +24,7 @@ import os
 import typing
 
 import case_utils.inherent_uuid
+import cdo_local_uuid
 import rdflib.plugins.sparql
 import rdflib.util
 from case_utils.namespace import (
@@ -36,6 +37,7 @@ from case_utils.namespace import (
     NS_UCO_TYPES,
     NS_XSD,
 )
+from cdo_local_uuid import local_uuid
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
@@ -85,9 +87,7 @@ def controlled_dictionary_object_to_node(
     ns_base: rdflib.Namespace,
     controlled_dict: typing.Dict[str, rdflib.Literal],
 ) -> rdflib.URIRef:
-    n_controlled_dictionary = ns_base[
-        "ControlledDictionary-" + case_utils.local_uuid.local_uuid()
-    ]
+    n_controlled_dictionary = ns_base["ControlledDictionary-" + local_uuid()]
     graph.add((n_controlled_dictionary, NS_RDF.type, NS_UCO_TYPES.ControlledDictionary))
     for key in sorted(controlled_dict.keys()):
         v_value = controlled_dict[key]
@@ -96,9 +96,7 @@ def controlled_dictionary_object_to_node(
         except AssertionError:
             _logger.info("v_value = %r." % v_value)
             raise
-        n_entry = ns_base[
-            "ControlledDictionaryEntry-" + case_utils.local_uuid.local_uuid()
-        ]
+        n_entry = ns_base["ControlledDictionaryEntry-" + local_uuid()]
         graph.add((n_controlled_dictionary, NS_UCO_TYPES.entry, n_entry))
         graph.add((n_entry, NS_RDF.type, NS_UCO_TYPES.ControlledDictionaryEntry))
         graph.add((n_entry, NS_UCO_TYPES.key, rdflib.Literal(key)))
@@ -119,7 +117,7 @@ def manufacturer_name_to_node(
     """
     n_manufacturer: typing.Optional[rdflib.URIRef] = None
     if printconv_name is not None or raw_name is not None:
-        n_manufacturer = ns_base["Identity-" + case_utils.local_uuid.local_uuid()]
+        n_manufacturer = ns_base["Identity-" + local_uuid()]
         graph.add((n_manufacturer, NS_RDF.type, NS_UCO_IDENTITY.Identity))
 
     if printconv_name is not None:
@@ -523,9 +521,7 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_camera_object is None:
-            self._n_camera_object = self.ns_base[
-                "Device-" + case_utils.local_uuid.local_uuid()
-            ]
+            self._n_camera_object = self.ns_base["Device-" + local_uuid()]
             self.graph.add(
                 (self._n_camera_object, NS_RDF.type, NS_UCO_OBSERVABLE.ObservableObject)
             )
@@ -547,7 +543,7 @@ class ExifToolRDFMapper(object):
                 )
             else:
                 self._n_camera_object_device_facet = self.ns_base[
-                    "DeviceFacet-" + case_utils.local_uuid.local_uuid()
+                    "DeviceFacet-" + local_uuid()
                 ]
             self.graph.add(
                 (
@@ -579,7 +575,7 @@ class ExifToolRDFMapper(object):
                 )
             else:
                 self._n_content_data_facet = self.ns_base[
-                    "ContentDataFacet-" + case_utils.local_uuid.local_uuid()
+                    "ContentDataFacet-" + local_uuid()
                 ]
             self.graph.add(
                 (
@@ -628,9 +624,7 @@ class ExifToolRDFMapper(object):
                     namespace=self.ns_base,
                 )
             else:
-                self._n_exif_facet = self.ns_base[
-                    "EXIFFacet-" + case_utils.local_uuid.local_uuid()
-                ]
+                self._n_exif_facet = self.ns_base["EXIFFacet-" + local_uuid()]
             self.graph.add(
                 (self._n_exif_facet, NS_RDF.type, NS_UCO_OBSERVABLE.EXIFFacet)
             )
@@ -652,9 +646,7 @@ class ExifToolRDFMapper(object):
                     namespace=self.ns_base,
                 )
             else:
-                self._n_file_facet = self.ns_base[
-                    "FileFacet-" + case_utils.local_uuid.local_uuid()
-                ]
+                self._n_file_facet = self.ns_base["FileFacet-" + local_uuid()]
             self.graph.add(
                 (self._n_file_facet, NS_RDF.type, NS_UCO_OBSERVABLE.FileFacet)
             )
@@ -669,9 +661,7 @@ class ExifToolRDFMapper(object):
         Initialized on first access.
         """
         if self._n_location_object is None:
-            self._n_location_object = self.ns_base[
-                "Location-" + case_utils.local_uuid.local_uuid()
-            ]
+            self._n_location_object = self.ns_base["Location-" + local_uuid()]
             self.graph.add(
                 (self._n_location_object, NS_RDF.type, NS_UCO_LOCATION.Location)
             )
@@ -693,7 +683,7 @@ class ExifToolRDFMapper(object):
                 )
             else:
                 self._n_location_object_latlong_facet = self.ns_base[
-                    "LatLongCoordinatesFacet-" + case_utils.local_uuid.local_uuid()
+                    "LatLongCoordinatesFacet-" + local_uuid()
                 ]
             self.graph.add(
                 (
@@ -718,9 +708,7 @@ class ExifToolRDFMapper(object):
         """
         if self._n_observable_object is None:
             assert isinstance(self.oo_slug, str)
-            self._n_observable_object = self.ns_base[
-                self.oo_slug + case_utils.local_uuid.local_uuid()
-            ]
+            self._n_observable_object = self.ns_base[self.oo_slug + local_uuid()]
             # TODO Prepare list of more interesting types on adoption of the UCO release providing the ObservableObject subclass hierarchy.
             self.graph.add(
                 (
@@ -747,7 +735,7 @@ class ExifToolRDFMapper(object):
                 )
             else:
                 self._n_raster_picture_facet = self.ns_base[
-                    "RasterPictureFacet-" + case_utils.local_uuid.local_uuid()
+                    "RasterPictureFacet-" + local_uuid()
                 ]
             self.graph.add(
                 (
@@ -772,7 +760,7 @@ class ExifToolRDFMapper(object):
         """
         if self._n_relationship_object_location is None:
             self._n_relationship_object_location = self.ns_base[
-                "Relationship-" + case_utils.local_uuid.local_uuid()
+                "Relationship-" + local_uuid()
             ]
             self.graph.add(
                 (
@@ -827,7 +815,7 @@ class ExifToolRDFMapper(object):
                 )
             else:
                 self._n_unix_file_permissions_facet = self.ns_base[
-                    "UNIXFilePermissionsFacet-" + case_utils.local_uuid.local_uuid()
+                    "UNIXFilePermissionsFacet-" + local_uuid()
                 ]
             self.graph.add(
                 (
@@ -872,7 +860,7 @@ class ExifToolRDFMapper(object):
 
 
 def main() -> None:
-    case_utils.local_uuid.configure()
+    cdo_local_uuid.configure()
 
     args = argument_parser.parse_args()
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)

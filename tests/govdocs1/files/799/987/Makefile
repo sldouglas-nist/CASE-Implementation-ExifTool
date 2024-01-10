@@ -49,7 +49,7 @@ analysis.ttl: \
   $(top_srcdir)/case_exiftool/__init__.py \
   799987_printConv.xml \
   799987_raw.xml
-	export CASE_DEMO_NONRANDOM_UUID_BASE=$(top_srcdir) \
+	export CDO_DEMO_NONRANDOM_UUID_BASE=$(top_srcdir) \
 	  && source $(top_srcdir)/tests/venv/bin/activate \
 	    && case_exiftool \
 	      --output-format turtle \
