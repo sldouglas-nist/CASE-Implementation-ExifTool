@@ -1,0 +1,62 @@
+@prefix exiftool-ExifTool: <http://ns.exiftool.org/ExifTool/1.0/> .
+@prefix exiftool-File: <http://ns.exiftool.org/File/1.0/> .
+@prefix exiftool-System: <http://ns.exiftool.org/File/System/1.0/> .
+@prefix exiftool-et: <http://ns.exiftool.org/1.0/> .
+@prefix kb: <http://example.org/kb/> .
+@prefix ns1: <http://ns.exiftool.org/PDF/PDF/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uco-core: <https://ontology.unifiedcyberontology.org/uco/core/> .
+@prefix uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+kb:ContentDataFacet-c43d5237-b3f7-51d8-a7d6-ac412b476a39
+	a uco-observable:ContentDataFacet ;
+	uco-observable:mimeType "application/pdf" ;
+	uco-observable:sizeInBytes "55964"^^xsd:integer ;
+	.
+
+kb:File-69728535-c7b0-548c-a7ac-46116019f793
+	a uco-observable:ObservableObject ;
+	exiftool-et:toolkit "Image::ExifTool 12.76" ;
+	exiftool-ExifTool:ExifToolVersion "12.76" ;
+	exiftool-File:FileType "PDF" ;
+	exiftool-File:FileTypeExtension
+		"PDF" ,
+		"pdf"
+		;
+	exiftool-System:Directory "." ;
+	ns1:Author "U.S. Government Printing Office" ;
+	ns1:CreateDate "2005:05:25 02:23:55" ;
+	ns1:Creator "ACOMP.exe   WinVer 1b43  jul 14 2003" ;
+	ns1:Linearized
+		"No" ,
+		"false"
+		;
+	ns1:ModifyDate "2005:05:25 02:23:55" ;
+	ns1:PDFVersion "1.5" ;
+	ns1:PageCount "2" ;
+	ns1:Producer "Acrobat Distiller 4.0 for Windows" ;
+	ns1:Subject "Extracted Pages" ;
+	ns1:Title "Document" ;
+	uco-core:hasFacet
+		kb:ContentDataFacet-c43d5237-b3f7-51d8-a7d6-ac412b476a39 ,
+		kb:FileFacet-7beb203d-a342-5463-bb71-73b8d593fbde ,
+		kb:UNIXFilePermissionsFacet-ae24023d-b454-5723-a8b0-af842b7779ea
+		;
+	.
+
+kb:FileFacet-7beb203d-a342-5463-bb71-73b8d593fbde
+	a uco-observable:FileFacet ;
+	uco-observable:accessedTime "2024-01-01T17:34:31-04:00"^^xsd:dateTime ;
+	uco-observable:fileName "000015.pdf" ;
+	uco-observable:metadataChangeTime "2024-01-01T17:32:40-04:00"^^xsd:dateTime ;
+	uco-observable:modifiedTime "2024-01-01T17:32:40-04:00"^^xsd:dateTime ;
+	.
+
+kb:UNIXFilePermissionsFacet-ae24023d-b454-5723-a8b0-af842b7779ea
+	a uco-observable:UNIXFilePermissionsFacet ;
+	rdfs:comment "-rw-r--r--" ;
+	.
+
