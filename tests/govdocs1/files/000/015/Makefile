@@ -103,6 +103,8 @@ analysis.ttl: \
 
 check: \
   analysis.json
+	source $(top_srcdir)/tests/venv/bin/activate \
+	  && pytest
 
 clean:
 	@rm -f \
