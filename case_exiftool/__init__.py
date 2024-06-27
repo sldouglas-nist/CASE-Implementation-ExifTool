@@ -41,6 +41,7 @@ from cdo_local_uuid import local_uuid
 
 _logger = logging.getLogger(os.path.basename(__file__))
 
+NS_DRAFTING = rdflib.Namespace("http://example.org/ontology/drafting/")
 NS_EXIFTOOL_COMPOSITE = rdflib.Namespace("http://ns.exiftool.org/Composite/1.0/")
 NS_EXIFTOOL_ET = rdflib.Namespace("http://ns.exiftool.org/1.0/")
 NS_EXIFTOOL_EXIFTOOL = rdflib.Namespace("http://ns.exiftool.org/ExifTool/1.0/")
@@ -371,6 +372,16 @@ class ExifToolRDFMapper(object):
                         rdflib.Literal(int(v_raw.toPython())),
                     )
                 )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/Author":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_DRAFTING.pdfAuthor,
+                        rdflib.Literal(v_raw.toPython()),
+                    )
+                )
         elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/CreateDate":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
@@ -383,6 +394,26 @@ class ExifToolRDFMapper(object):
                         ),
                     )
                 )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/Creator":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_DRAFTING.pdfCreator,
+                        rdflib.Literal(v_raw.toPython()),
+                    )
+                )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/Linearized":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_DRAFTING.pdfLinearized,
+                        rdflib.Literal(v_raw.toPython()),
+                    )
+                )
         elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/ModifyDate":
             (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
             if isinstance(v_raw, rdflib.Literal):
@@ -393,6 +424,56 @@ class ExifToolRDFMapper(object):
                         rdflib.Literal(
                             v_raw.toPython().replace(" ", "T"), datatype=NS_XSD.dateTime
                         ),
+                    )
+                )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/PDFVersion":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_UCO_OBSERVABLE.version,
+                        rdflib.Literal(v_raw.toPython()),
+                    )
+                )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/PageCount":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_DRAFTING.pdfPageCount,
+                        rdflib.Literal(v_raw.toPython()),
+                    )
+                )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/Producer":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_DRAFTING.pdfProducer,
+                        rdflib.Literal(v_raw.toPython()),
+                    )
+                )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/Subject":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_DRAFTING.pdfSubject,
+                        rdflib.Literal(v_raw.toPython()),
+                    )
+                )
+        elif exiftool_iri == "http://ns.exiftool.org/PDF/PDF/1.0/Title":
+            (v_raw, v_printconv) = self.pop_n_exiftool_predicate(n_exiftool_predicate)
+            if isinstance(v_raw, rdflib.Literal):
+                self.graph.add(
+                    (
+                        self.n_pdf_file_facet,
+                        NS_DRAFTING.pdfTitle,
+                        rdflib.Literal(v_raw.toPython()),
                     )
                 )
         else:
@@ -919,6 +1000,7 @@ def main() -> None:
     NS_BASE = rdflib.Namespace(args.base_prefix)
     out_graph = rdflib.Graph()
 
+    out_graph.namespace_manager.bind("drafting", NS_DRAFTING)
     out_graph.namespace_manager.bind("exiftool-Composite", NS_EXIFTOOL_COMPOSITE)
     out_graph.namespace_manager.bind("exiftool-et", NS_EXIFTOOL_ET)
     out_graph.namespace_manager.bind("exiftool-ExifTool", NS_EXIFTOOL_EXIFTOOL)
