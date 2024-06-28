@@ -1,4 +1,4 @@
-#!/usr/bin/make -f
+#!/usr/bin/env python3
 
 # Portions of this file contributed by NIST are governed by the
 # following statement:
@@ -14,26 +14,28 @@
 #
 # We would appreciate acknowledgement if the software is used.
 
-SHELL := /bin/bash
+import rdflib.plugins.sparql
 
-all:
-	$(MAKE) \
-	  --directory files/799/987
-	$(MAKE) \
-	  --directory files/000/015
+graph = rdflib.Graph()
+graph.parse("analysis.json", format="json-ld")
 
-check:
-	$(MAKE) \
-	  --directory files/799/987 \
-	  check
-	$(MAKE) \
-	  --directory files/000/015 \
-	  check
+nsdict = {k: v for (k, v) in graph.namespace_manager.namespaces()}
 
-clean:
-	@$(MAKE) \
-	  --directory files/799/987 \
-	  clean
-	@$(MAKE) \
-	  --directory files/000/015 \
-	  clean
+
+def test_confirm_pdf_typed() -> None:
+    query = rdflib.plugins.sparql.processor.prepareQuery(
+        """\
+SELECT ?nPDFFile
+WHERE {
+  ?nPDFFile
+    a uco-observable:PDFFile
+    .
+}""",
+        initNs=nsdict,
+    )
+    iris = set()
+    for result in graph.query(query):
+        assert isinstance(result, rdflib.query.ResultRow)
+        assert isinstance(result[0], rdflib.term.IdentifiedNode)
+        iris.add(result[0].toPython())
+    assert len(iris) == 1
