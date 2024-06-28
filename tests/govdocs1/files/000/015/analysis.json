@@ -1,8 +1,8 @@
 {
     "@context": {
+        "drafting": "http://example.org/ontology/drafting/",
         "exiftool-ExifTool": "http://ns.exiftool.org/ExifTool/1.0/",
         "exiftool-File": "http://ns.exiftool.org/File/1.0/",
-        "exiftool-PDF-PDF": "http://ns.exiftool.org/PDF/PDF/1.0/",
         "exiftool-System": "http://ns.exiftool.org/File/System/1.0/",
         "exiftool-et": "http://ns.exiftool.org/1.0/",
         "kb": "http://example.org/kb/",
@@ -36,17 +36,6 @@
                 "pdf"
             ],
             "exiftool-System:Directory": ".",
-            "exiftool-PDF-PDF:Author": "U.S. Government Printing Office",
-            "exiftool-PDF-PDF:Creator": "ACOMP.exe   WinVer 1b43  jul 14 2003",
-            "exiftool-PDF-PDF:Linearized": [
-                "No",
-                "false"
-            ],
-            "exiftool-PDF-PDF:PDFVersion": "1.5",
-            "exiftool-PDF-PDF:PageCount": "2",
-            "exiftool-PDF-PDF:Producer": "Acrobat Distiller 4.0 for Windows",
-            "exiftool-PDF-PDF:Subject": "Extracted Pages",
-            "exiftool-PDF-PDF:Title": "Document",
             "uco-core:hasFacet": [
                 {
                     "@id": "kb:ContentDataFacet-c43d5237-b3f7-51d8-a7d6-ac412b476a39"
@@ -82,6 +71,13 @@
         {
             "@id": "kb:PDFFileFacet-b8927948-bdae-58e6-b6cd-41841eafe1b2",
             "@type": "uco-observable:PDFFileFacet",
+            "drafting:pdfAuthor": "U.S. Government Printing Office",
+            "drafting:pdfCreator": "ACOMP.exe   WinVer 1b43  jul 14 2003",
+            "drafting:pdfLinearized": "false",
+            "drafting:pdfPageCount": "2",
+            "drafting:pdfProducer": "Acrobat Distiller 4.0 for Windows",
+            "drafting:pdfSubject": "Extracted Pages",
+            "drafting:pdfTitle": "Document",
             "uco-observable:pdfCreationDate": {
                 "@type": "xsd:dateTime",
                 "@value": "2005-01-01T02:23:55"
@@ -89,7 +85,8 @@
             "uco-observable:pdfModDate": {
                 "@type": "xsd:dateTime",
                 "@value": "2005-01-01T02:23:55"
-            }
+            },
+            "uco-observable:version": "1.5"
         },
         {
             "@id": "kb:UNIXFilePermissionsFacet-ae24023d-b454-5723-a8b0-af842b7779ea",
